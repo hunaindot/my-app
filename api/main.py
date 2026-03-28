@@ -19,8 +19,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 # ── Config ─────────────────────────────────────────────────────────────────
-DB_PATH = Path(__file__).parent / "documents.sqlite"
-INFO_PATH = Path(__file__).parent.parent / "frontend" / "public" / "data" / "info.json"
+DB_PATH = Path(os.getenv("DB_PATH", str(Path(__file__).parent / "documents.sqlite")))
+INFO_PATH = Path(os.getenv("INFO_PATH", str(Path(__file__).parent / "info.json")))
 
 ALLOWED_ORIGINS = os.getenv(
     "ALLOWED_ORIGINS",

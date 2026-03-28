@@ -6,10 +6,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY main.py .
+COPY info.json .
 
-# documents.sqlite is expected at /data/documents.sqlite (Fly volume)
-# Override DB_PATH via env if needed
-ENV DB_PATH=/data/documents.sqlite
+# documents.sqlite is uploaded as a Secret File in Render (or set DB_PATH env var)
+ENV DB_PATH=/app/documents.sqlite
 
 EXPOSE 8000
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
