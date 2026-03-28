@@ -3,23 +3,24 @@ api/main.py
 
 Minimal FastAPI backend. Only two endpoints:
   GET  /api/info         → serves info.json
-  POST /api/documents    → fetch full records from SQLite by ids
+  POST /api/documents    → fetch full records from Postgres (Supabase) by ids
 
 All filtering is client-side (bitmasks). This API only serves full document
 records on demand (abstracts, full label lists, DOI, authors).
 """
 import os
 import json
-import sqlite3
 from pathlib import Path
 from typing import List
 
+import psycopg2
+import psycopg2.extras
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 # ── Config ─────────────────────────────────────────────────────────────────
-DB_PATH = Path(os.getenv("DB_PATH", str(Path(__file__).parent / "documents.sqlite")))
+DATABASE_URL = os.getenv("DATABASE_URL")  # set in Render env vars
 INFO_PATH = Path(os.getenv("INFO_PATH", str(Path(__file__).parent / "info.json")))
 
 ALLOWED_ORIGINS = os.getenv(
@@ -40,13 +41,9 @@ app.add_middleware(
 
 # ── Helpers ─────────────────────────────────────────────────────────────────
 def get_db():
-    if not DB_PATH.exists():
-        raise HTTPException(
-            status_code=503,
-            detail="Database not yet generated. Run scripts/export_sqlite.py first."
-        )
-    conn = sqlite3.connect(DB_PATH, check_same_thread=False)
-    conn.row_factory = sqlite3.Row
+    if not DATABASE_URL:
+        raise HTTPException(status_code=503, detail="DATABASE_URL not set.")
+    conn = psycopg2.connect(DATABASE_URL, cursor_factory=psycopg2.extras.RealDictCursor)
     return conn
 
 
@@ -76,24 +73,24 @@ def get_documents(req: DocumentsRequest):
 
     conn = get_db()
     try:
-        placeholders = ",".join("?" for _ in req.ids)
-        rows = conn.execute(
-            f"""
-            SELECT
-                id, title, abstract, year, doi, authors,
-                drivers, threat_l0, threat_l1,
-                realm, biome, study_design,
-                kingdom, region, direction
-            FROM documents
-            WHERE id IN ({placeholders})
-            ORDER BY id
-            """,
-            req.ids,
-        ).fetchall()
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT
+                    id, title, abstract, year, doi, authors,
+                    drivers, threat_l0, threat_l1,
+                    realm, biome, study_design,
+                    kingdom, region, direction
+                FROM documents
+                WHERE id = ANY(%s)
+                ORDER BY id
+                """,
+                (req.ids,),
+            )
+            rows = cur.fetchall()
     finally:
         conn.close()
 
-    import json as _json
     _array_cols = {'drivers', 'threat_l0', 'threat_l1', 'realm', 'biome', 'kingdom', 'region'}
     result = []
     for row in rows:
@@ -101,7 +98,7 @@ def get_documents(req: DocumentsRequest):
         for col in _array_cols:
             if col in d and isinstance(d[col], str):
                 try:
-                    d[col] = _json.loads(d[col])
+                    d[col] = json.loads(d[col])
                 except Exception:
                     d[col] = []
         result.append(d)
@@ -110,4 +107,9 @@ def get_documents(req: DocumentsRequest):
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "db": DB_PATH.exists()}
+    try:
+        conn = get_db()
+        conn.close()
+        return {"status": "ok", "db": "connected"}
+    except Exception:
+        return {"status": "ok", "db": "unavailable"}
