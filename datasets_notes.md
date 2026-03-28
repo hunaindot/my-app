@@ -11,9 +11,9 @@ frontend/public/data/
 ├── slim.arrow          ← scatterplot data (342,424 articles)
 ├── info.json           ← label registry (filter panel config)
 └── bitmasks/
-    ├── drivers|0.bin   ← one file per label (~42KB each)
-    ├── drivers|1.bin
-    ├── threats|0.bin
+    ├── drivers__0.bin  ← one file per label (~42KB each)
+    ├── drivers__1.bin
+    ├── threats__0.bin
     └── ...             (~40 files total)
 
 api/
@@ -85,7 +85,7 @@ One binary file per label value. E.g. `drivers|0.bin` = the "Land/sea use change
 - Size: ceil(342424 / 8) = **42,804 bytes** per file
 - Bit `i` = 1 means article at row `i` in slim.arrow has this label
 
-Filename pattern: `{group_key}|{label_index}.bin`
+Filename pattern: `{group_key}__{label_index}.bin`
 
 ### Filtering logic
 
@@ -133,3 +133,56 @@ User scrolls Results panel
 ```
 
 Full records are never loaded at startup — only fetched 10 at a time on demand.
+
+---
+
+## Updating the dataset
+
+Run this when you have a new `systematic_map.parquet` file.
+
+### 1. Regenerate static files (local)
+
+```bash
+cd scripts
+python compute_umap.py       # → data/systematic_map_umap.parquet
+python export_arrow.py       # → frontend/public/data/slim.arrow
+python export_bitmasks.py    # → frontend/public/data/bitmasks/*.bin + info.json
+python export_sqlite.py      # → api/documents.sqlite
+```
+
+### 2. Sync info.json to api/
+
+```bash
+cp frontend/public/data/info.json api/info.json
+```
+
+### 3. Upload new records to Supabase
+
+If replacing all data, truncate the table first in the Supabase SQL editor:
+```sql
+TRUNCATE TABLE documents;
+```
+
+Then run the migration:
+```bash
+cd scripts
+DATABASE_URL="..." python migrate_to_supabase.py
+```
+
+### 4. Commit and push static files
+
+```bash
+cd ..
+git add frontend/public/data/ api/info.json
+git commit -m "update data"
+git push
+```
+
+GitHub Actions rebuilds and redeploys the frontend automatically.
+
+### Bitmask filename convention
+
+Bitmask files use `__` as the separator (not `|`) to avoid URL-encoding issues on GitHub Pages.
+Pattern: `{group_key}__{label_index}.bin` e.g. `drivers__0.bin`
+
+This is handled automatically by `export_bitmasks.py` — do not rename files manually.
