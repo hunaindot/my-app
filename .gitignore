@@ -1,0 +1,105 @@
+# ── Project-specific ────────────────────────────────────────────────────────
+
+# Data files — large and/or unpublished, never committed
+data/
+api/documents.sqlite
+
+# Generated static assets (produced by scripts/, committed separately or via CI)
+frontend/public/data/slim.arrow
+frontend/public/data/bitmasks/
+
+# ── Python ───────────────────────────────────────────────────────────────────
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# mypy / pyright
+.mypy_cache/
+.pyright/
+pyrightconfig.json
+
+# ── Node / Frontend ──────────────────────────────────────────────────────────
+
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Dependency lock files — keep package-lock.json but ignore yarn/pnpm if unused
+# yarn.lock
+# pnpm-lock.yaml
+
+# ── Environment files ────────────────────────────────────────────────────────
+
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Keep example env files
+!.env.example
+
+# ── Editors & IDEs ───────────────────────────────────────────────────────────
+
+# VSCode
+.vscode/
+!.vscode/extensions.json
+
+# JetBrains (PyCharm, WebStorm, etc.)
+.idea/
+*.iml
+
+# Vim / Emacs
+*.swp
+*.swo
+*~
+\#*\#
+
+# ── OS ───────────────────────────────────────────────────────────────────────
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ── Misc ─────────────────────────────────────────────────────────────────────
+
+*.log
+*.tmp
+*.bak
+.cache/
+Claude.md
