@@ -91,6 +91,10 @@ def main():
     n = len(df)
     print(f"  {n:,} records")
 
+    # Clear old bitmask files so stale labels don't linger
+    if BITMASK_DIR.exists():
+        for f in BITMASK_DIR.glob("*.bin"):
+            f.unlink()
     BITMASK_DIR.mkdir(parents=True, exist_ok=True)
 
     # Load existing info.json to update counts

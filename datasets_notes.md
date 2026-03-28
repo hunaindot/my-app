@@ -171,9 +171,13 @@ DATABASE_URL="..." python migrate_to_supabase.py
 
 ### 4. Commit and push static files
 
+Use `git rm --cached` first to purge stale bitmask files from git before re-adding:
+
 ```bash
 cd ..
-git add frontend/public/data/ api/info.json
+git rm -r --cached frontend/public/data/bitmasks/
+git add frontend/public/data/bitmasks/
+git add frontend/public/data/slim.arrow frontend/public/data/info.json api/info.json
 git commit -m "update data"
 git push
 ```

@@ -28,7 +28,7 @@ sqlite_conn.row_factory = sqlite3.Row
 pg_conn = psycopg2.connect(DATABASE_URL)
 pg_conn.autocommit = False
 
-# ── Create table ─────────────────────────────────────────────────────────────
+# ── Create table & clear old data ────────────────────────────────────────────
 with pg_conn.cursor() as cur:
     cur.execute("""
         CREATE TABLE IF NOT EXISTS documents (
@@ -49,8 +49,9 @@ with pg_conn.cursor() as cur:
             direction    TEXT
         )
     """)
+    cur.execute("TRUNCATE TABLE documents")
     pg_conn.commit()
-    print("Table ready.")
+    print("Table ready (truncated).")
 
 # ── Migrate ───────────────────────────────────────────────────────────────────
 rows = sqlite_conn.execute("SELECT * FROM documents").fetchall()
