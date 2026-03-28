@@ -2,14 +2,17 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY main.py .
 COPY info.json .
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
 
-# documents.sqlite is uploaded as a Secret File in Render (or set DB_PATH env var)
 ENV DB_PATH=/app/documents.sqlite
 
 EXPOSE 8000
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+ENTRYPOINT ["./entrypoint.sh"]
