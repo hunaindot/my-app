@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/biodiversity-map/',  // GitHub Pages repo name — change if different
+  base: '/my-app/',
   server: {
     proxy: {
       '/api': {
