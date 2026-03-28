@@ -4,13 +4,16 @@ scripts/migrate_to_supabase.py
 One-time migration: copies all records from documents.sqlite → Supabase Postgres.
 
 Usage:
-    pip install psycopg2-binary
-    DATABASE_URL="postgresql://..." python migrate_to_supabase.py
+    pip install psycopg2-binary python-dotenv
+    python migrate_to_supabase.py
 """
 import os
 import sqlite3
 import psycopg2
 import psycopg2.extras
+from dotenv import load_dotenv
+
+load_dotenv()
 
 SQLITE_PATH = os.getenv("SQLITE_PATH", "../api/documents.sqlite")
 DATABASE_URL = os.getenv("DATABASE_URL")
