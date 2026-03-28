@@ -112,6 +112,7 @@ def main():
 
         for idx, value in enumerate(values):
             label_key = f"{group_key}|{idx}"
+            filename = f"{group_key}__{idx}"  # use __ separator to avoid URL-encoding issues
 
             if is_list_col:
                 # List column: record has label if value in its list
@@ -121,7 +122,7 @@ def main():
                 mask = col_data == value
 
             bitmask_bytes = make_bitmask(mask)
-            out_path = BITMASK_DIR / f"{label_key}.bin"
+            out_path = BITMASK_DIR / f"{filename}.bin"
             out_path.write_bytes(bitmask_bytes)
 
             count = mask.sum()

@@ -20,7 +20,7 @@ export async function loadAllBitmasks(info, basePath = './data/bitmasks/') {
     for (const labelKey of Object.keys(group.labels)) {
       // labelKey is e.g. "drivers|0"
       entries.push(
-        fetch(`${basePath}${encodeURIComponent(labelKey)}.bin`)
+        fetch(`${basePath}${labelKey.replace('|', '__')}.bin`)
           .then(r => r.arrayBuffer())
           .then(buf => [labelKey, new Uint8Array(buf)])
       )
