@@ -1,7 +1,6 @@
 # ── Project-specific ────────────────────────────────────────────────────────
 
 # Data files — large and/or unpublished, never committed
-data/
 api/documents.sqlite
 
 # Generated static assets (committed to repo for GitHub Pages serving)
