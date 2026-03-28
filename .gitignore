@@ -4,9 +4,7 @@
 data/
 api/documents.sqlite
 
-# Generated static assets (produced by scripts/, committed separately or via CI)
-frontend/public/data/slim.arrow
-frontend/public/data/bitmasks/
+# Generated static assets (committed to repo for GitHub Pages serving)
 
 # ── Python ───────────────────────────────────────────────────────────────────
 
