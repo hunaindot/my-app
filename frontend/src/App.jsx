@@ -99,7 +99,7 @@ export default function App() {
   return (
     <div className="flex flex-col h-screen font-sans text-sm bg-white">
       <header className="flex items-center px-4 py-2 border-b border-gray-200 bg-amber-700 text-white">
-        <span className="font-semibold text-base mr-4">Biodiversity Literature Map</span>
+        <span className="font-semibold text-base mr-4">Biodiversity Loss - Systematic Map</span>
         <button
           onClick={() => setTab('explorer')}
           className={`mr-3 px-3 py-1 rounded text-xs font-medium ${tab === 'explorer' ? 'bg-white text-amber-800' : 'text-white hover:bg-amber-600'}`}
