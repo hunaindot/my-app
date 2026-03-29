@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import FilterPanel from './components/FilterPanel'
 import Scatterplot from './components/Scatterplot'
 import TableView from './components/TableView'
+import GetView from './components/GetView'
+import ThreatsView from './components/ThreatsView'
 import ResultsList from './components/ResultsList'
 import InfoTab from './components/InfoTab'
 import { loadArrow } from './utils/arrow'
-import { loadAllBitmasks, computeFilterMask, computeYearMask, combineMasks, countBits } from './utils/bitmask'
+import { loadAllBitmasks, computeFilterMask, computeYearMask, combineMasks, countBits, toggleLabel } from './utils/bitmask'
 
 const MIN_PANEL = 160
 const MAX_PANEL = 560
@@ -19,7 +21,7 @@ export default function App() {
   const [yearRange, setYearRange] = useState(null)
   const [filteredMask, setFilteredMask] = useState(null)
   const [scatterSelection, setScatterSelection] = useState(null) // Int32Array | null
-  const [viewMode, setViewMode] = useState('scatter')            // 'scatter' | 'table'
+  const [viewMode, setViewMode] = useState('scatter')            // 'scatter' | 'table' | 'get' | 'threats'
   const [loading, setLoading] = useState(true)
 
   // Panel widths (px) — user can drag to resize
@@ -71,9 +73,16 @@ export default function App() {
     setYearRange(a <= b ? [a, b] : [b, a])
   }
 
+  const handleLabelClick = useCallback((groupKey, labelId) =>
+    setGroupFilters(groupKey, set =>
+      toggleLabel(set, labelId, info.groups[groupKey])
+    )
+  , [info])
+
   function clearFilters() {
     setActiveFilters({})
     if (info) setYearRange([info.start_year, info.end_year])
+    setScatterSelection(null)
   }
 
   if (loading) return (
@@ -140,8 +149,10 @@ export default function App() {
           <main className="flex-1 overflow-hidden flex flex-col">
             {/* View toggle */}
             <div className="flex-shrink-0 flex items-center gap-1 px-3 py-1.5 border-b border-gray-100 bg-white">
-              <ViewTab label="Scatter" active={viewMode === 'scatter'} onClick={() => setViewMode('scatter')} />
-              <ViewTab label="Table"   active={viewMode === 'table'}   onClick={() => setViewMode('table')} />
+              <ViewTab label="Scatter"    active={viewMode === 'scatter'}  onClick={() => setViewMode('scatter')} />
+              <ViewTab label="Table"      active={viewMode === 'table'}    onClick={() => setViewMode('table')} />
+              <ViewTab label="Ecosystems" active={viewMode === 'get'}      onClick={() => setViewMode('get')} />
+              <ViewTab label="Threats"    active={viewMode === 'threats'}  onClick={() => setViewMode('threats')} />
             </div>
             <div className="flex-1 overflow-hidden relative">
               {viewMode === 'scatter' ? (
@@ -152,6 +163,22 @@ export default function App() {
                   info={info}
                   selection={scatterSelection}
                   onSelect={setScatterSelection}
+                />
+              ) : viewMode === 'get' ? (
+                <GetView
+                  info={info}
+                  bitmasks={bitmasks}
+                  filteredMask={filteredMask}
+                  activeFilters={activeFilters}
+                  onLabelClick={handleLabelClick}
+                />
+              ) : viewMode === 'threats' ? (
+                <ThreatsView
+                  info={info}
+                  bitmasks={bitmasks}
+                  filteredMask={filteredMask}
+                  activeFilters={activeFilters}
+                  onLabelClick={handleLabelClick}
                 />
               ) : (
                 <TableView

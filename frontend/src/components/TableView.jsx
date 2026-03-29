@@ -22,7 +22,10 @@ const COLUMN_CONFIG = [
   { key: 'region_l0', group: 'region', title: 'Region', filter: l => l.level === 0 },
   { key: 'region_l1', group: 'region', title: 'Subregion', filter: l => l.level === 1 },
   { key: 'region_l2', group: 'region', title: 'Country / sub-national', filter: l => l.level >= 2 },
-  { key: 'realm', group: 'realm' },
+  // Ecosystem typology (GET): Realm, Biome, EFG
+  { key: 'realm_l0', group: 'realm', title: 'Realm', filter: l => l.level === 0 },
+  { key: 'realm_l1', group: 'realm', title: 'Biome', filter: l => l.level === 1 },
+  { key: 'realm_l2', group: 'realm', title: 'EFG', filter: l => l.level === 2 },
 ]
 
 export default function TableView({ arrowData, filteredMask, bitmasks, info, selection, onSelect }) {

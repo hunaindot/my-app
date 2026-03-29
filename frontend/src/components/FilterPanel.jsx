@@ -139,28 +139,40 @@ function YearHistogram({ arrowData, yearRange, onYearRange, info }) {
         Publication year
       </div>
       <div ref={containerRef} className="w-full" />
-      <div className="flex gap-1 mt-1">
-        <input
-          type="range"
-          min={info.start_year}
-          max={info.end_year}
-          value={minYear}
-          onChange={e => onYearRange([+e.target.value, maxYear])}
-          className="flex-1 accent-amber-700 h-1"
-        />
-        <input
-          type="range"
-          min={info.start_year}
-          max={info.end_year}
-          value={maxYear}
-          onChange={e => onYearRange([minYear, +e.target.value])}
-          className="flex-1 accent-amber-700 h-1"
-        />
-      </div>
+      <DualRangeSlider
+        min={info.start_year} max={info.end_year}
+        low={minYear} high={maxYear}
+        onChange={onYearRange}
+      />
       <div className="flex justify-between text-[10px] text-gray-400 mt-0.5">
         <span>{minYear}</span>
         <span>{maxYear}</span>
       </div>
+    </div>
+  )
+}
+
+// Tailwind classes for both range inputs — defined once at module level
+const RANGE_CLS = 'absolute inset-0 w-full h-full appearance-none bg-transparent pointer-events-none [&::-webkit-slider-runnable-track]:bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-amber-700 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-moz-range-track]:bg-transparent [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:w-3.5 [&::-moz-range-thumb]:h-3.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-amber-700 [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer'
+
+function DualRangeSlider({ min, max, low, high, onChange }) {
+  const span = max - min
+  const pct  = v => ((v - min) / span) * 100
+  return (
+    <div className="relative mt-2 mb-1" style={{ height: 16 }}>
+      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1 bg-gray-200 rounded pointer-events-none" />
+      <div
+        className="absolute top-1/2 -translate-y-1/2 h-1 bg-amber-700 rounded pointer-events-none"
+        style={{ left: `${pct(low)}%`, right: `${100 - pct(high)}%` }}
+      />
+      <input type="range" min={min} max={max} value={low}
+        onChange={e => onChange([Math.min(+e.target.value, high), high])}
+        className={RANGE_CLS}
+      />
+      <input type="range" min={min} max={max} value={high}
+        onChange={e => onChange([low, Math.max(+e.target.value, low)])}
+        className={RANGE_CLS}
+      />
     </div>
   )
 }
