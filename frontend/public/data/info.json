@@ -22,7 +22,7 @@
           ],
           "count": 378,
           "bitmask_file": "drivers__land_sea_use_change.bin"
-        },
+        }, 
         "direct_exploitation": {
           "id": "direct_exploitation",
           "code": "direct_exploitation",
