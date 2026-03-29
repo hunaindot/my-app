@@ -14,14 +14,15 @@ cd "$SCRIPT_DIR"
 
 # Prefer real parquet if present; fall back to mock otherwise
 PARQUET="$(ls "$ROOT"/data/*.parq* 2>/dev/null | head -n 1)"
+PYTHON_BIN=${PYTHON_BIN:-python3}
 if [ -n "$PARQUET" ]; then
     echo "Found $PARQUET — running full pipeline"
-    python export_arrow.py
-    python export_bitmasks.py
-    python export_sqlite.py
+    "$PYTHON_BIN" export_arrow.py
+    "$PYTHON_BIN" export_bitmasks.py
+    "$PYTHON_BIN" export_sqlite.py
 else
     echo "WARNING: no data/*.parq* found — generating mock data instead"
-    python generate_mock_data.py
+    "$PYTHON_BIN" generate_mock_data.py
 fi
 
 echo ""
@@ -30,7 +31,7 @@ cp "$ROOT/frontend/public/data/info.json" "$ROOT/api/info.json"
 
 echo ""
 echo "=== Step 3: Migrate to Supabase ==="
-python migrate_to_supabase.py
+"$PYTHON_BIN" migrate_to_supabase.py
 
 echo ""
 echo "=== Step 4: Clean and re-add bitmasks in git ==="
