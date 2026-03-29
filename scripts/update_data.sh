@@ -11,10 +11,18 @@ ROOT="$SCRIPT_DIR/.."
 
 echo "=== Step 1: Regenerate static files ==="
 cd "$SCRIPT_DIR"
-python compute_umap.py
-python export_arrow.py
-python export_bitmasks.py
-python export_sqlite.py
+
+PARQUET="$ROOT/data/systematic_map.parquet"
+if [ -f "$PARQUET" ]; then
+    echo "Found $PARQUET — running full pipeline"
+    python compute_umap.py
+    python export_arrow.py
+    python export_bitmasks.py
+    python export_sqlite.py
+else
+    echo "WARNING: $PARQUET not found — generating mock data instead"
+    python generate_mock_data.py
+fi
 
 echo ""
 echo "=== Step 2: Sync info.json to api/ ==="

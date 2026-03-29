@@ -13,6 +13,9 @@ import json
 from pathlib import Path
 from typing import List
 
+from dotenv import load_dotenv
+load_dotenv()
+
 import psycopg2
 import psycopg2.extras
 from fastapi import FastAPI, HTTPException
