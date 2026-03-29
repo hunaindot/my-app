@@ -21,7 +21,7 @@ export default function Scatterplot({ arrowData, filteredMask, bitmasks, info, s
   const [brush,   setBrush]   = useState(null)   // { x1,y1,x2,y2 } px
   const [xDomain, setXDomain] = useState(null)   // null = auto-fit to data
   const [yDomain, setYDomain] = useState(null)
-  const [panMode, setPanMode] = useState(true)  // false = select, true = pan
+  const [panMode, setPanMode] = useState(false)  // false = select, true = pan
   const PAN_SENSITIVITY = 0.65
   const ZOOM_SENSITIVITY = 0.0015
 
@@ -239,7 +239,7 @@ export default function Scatterplot({ arrowData, filteredMask, bitmasks, info, s
     if (!isDragging.current && Math.abs(dx) < 5 && Math.abs(dy) < 5) return
     isDragging.current = true
 
-    if (panMode) {
+    if (panMode || !e.shiftKey) {
       panFn.current(dx * PAN_SENSITIVITY, dy * PAN_SENSITIVITY)
       dragStart.current = pos   // incremental delta: update anchor each move
     } else {
@@ -257,7 +257,7 @@ export default function Scatterplot({ arrowData, filteredMask, bitmasks, info, s
     const pos = getPos(e)
     const plot = plotRef.current
 
-    if (!panMode && plot && arrowData) {
+    if (plot && arrowData) {
       try {
         const xSc = plot.scale('x'), ySc = plot.scale('y')
         if (!isDragging.current) {

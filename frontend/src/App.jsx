@@ -22,7 +22,7 @@ export default function App() {
   const [yearRange, setYearRange] = useState(null)
   const [filteredMask, setFilteredMask] = useState(null)
   const [scatterSelection, setScatterSelection] = useState(null) // Int32Array | null
-  const [viewMode, setViewMode] = useState('matrix')             // 'scatter' | 'table' | 'get' | 'threats' | 'matrix'
+  const [viewMode, setViewMode] = useState('scatter')            // 'scatter' | 'table' | 'get' | 'threats' | 'matrix'
   const [loading, setLoading] = useState(true)
   const [filtersOpen, setFiltersOpen] = useState(true)
   const [resultsOpen, setResultsOpen] = useState(true)
