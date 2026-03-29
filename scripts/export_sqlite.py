@@ -25,8 +25,8 @@ COLUMNS = {
     "title": "Article Title",
     "abstract": "Abstract",
     "year": "Publication Year",
-    "doi": None,
-    "authors": None,
+    "doi": "DOI",
+    "authors": "Authors",
     "drivers": "pred_driver",
     "threat_l0": "pred_threat_l0",
     "threat_l1": "pred_threat_l1",
@@ -53,8 +53,8 @@ def main():
     out["title"] = src[COLUMNS["title"]].fillna("").astype(str)
     out["abstract"] = src[COLUMNS["abstract"]].fillna("").astype(str)
     out["year"] = src[COLUMNS["year"]].astype("int16")
-    out["doi"] = ""
-    out["authors"] = ""
+    out["doi"] = src.get(COLUMNS["doi"], "").fillna("").astype(str)
+    out["authors"] = src.get(COLUMNS["authors"], "").fillna("").astype(str)
 
     def parse_list(val):
         if val is None:
