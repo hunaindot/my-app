@@ -16,9 +16,9 @@
           "parent": null,
           "children": [],
           "colour": [
-            120,
-            55,
-            45
+            112,
+            58,
+            42
           ],
           "count": 378,
           "bitmask_file": "drivers__land_sea_use_change.bin"
@@ -31,9 +31,9 @@
           "parent": null,
           "children": [],
           "colour": [
-            20,
-            65,
-            50
+            23,
+            70,
+            44
           ],
           "count": 194,
           "bitmask_file": "drivers__direct_exploitation.bin"
@@ -46,9 +46,9 @@
           "parent": null,
           "children": [],
           "colour": [
-            195,
-            60,
-            50
+            198,
+            68,
+            46
           ],
           "count": 260,
           "bitmask_file": "drivers__climate_change.bin"
@@ -61,8 +61,8 @@
           "parent": null,
           "children": [],
           "colour": [
-            290,
-            50,
+            252,
+            33,
             50
           ],
           "count": 372,
@@ -76,9 +76,9 @@
           "parent": null,
           "children": [],
           "colour": [
-            80,
-            55,
-            45
+            329,
+            72,
+            48
           ],
           "count": 164,
           "bitmask_file": "drivers__invasive_alien_species.bin"
