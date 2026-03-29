@@ -4,6 +4,7 @@ import Scatterplot from './components/Scatterplot'
 import TableView from './components/TableView'
 import GetView from './components/GetView'
 import ThreatsView from './components/ThreatsView'
+import MatrixView from './components/MatrixView'
 import ResultsList from './components/ResultsList'
 import InfoTab from './components/InfoTab'
 import { loadArrow } from './utils/arrow'
@@ -21,8 +22,10 @@ export default function App() {
   const [yearRange, setYearRange] = useState(null)
   const [filteredMask, setFilteredMask] = useState(null)
   const [scatterSelection, setScatterSelection] = useState(null) // Int32Array | null
-  const [viewMode, setViewMode] = useState('scatter')            // 'scatter' | 'table' | 'get' | 'threats'
+  const [viewMode, setViewMode] = useState('matrix')             // 'scatter' | 'table' | 'get' | 'threats' | 'matrix'
   const [loading, setLoading] = useState(true)
+  const [filtersOpen, setFiltersOpen] = useState(true)
+  const [resultsOpen, setResultsOpen] = useState(true)
 
   // Panel widths (px) — user can drag to resize
   const [filterWidth, setFilterWidth] = useState(288)   // ~w-72
@@ -122,29 +125,33 @@ export default function App() {
         <InfoTab />
       ) : (
         <div className="flex flex-1 overflow-hidden">
-          <aside
-            style={{ width: filterWidth, minWidth: MIN_PANEL, maxWidth: MAX_PANEL }}
-            className="flex-shrink-0 overflow-y-auto border-r border-gray-200 p-3"
-          >
-            <FilterPanel
-              info={info}
-              arrowData={arrowData}
-              bitmasks={bitmasks}
-              activeFilters={activeFilters}
-              filteredMask={filteredMask}
-              yearRange={yearRange}
-              totalVisible={totalVisible}
-              onSetGroup={setGroupFilters}
-              onYearRange={handleYearRange}
-              onClear={clearFilters}
-            />
-          </aside>
+          {filtersOpen && (
+            <>
+              <aside
+                style={{ width: filterWidth, minWidth: MIN_PANEL, maxWidth: MAX_PANEL }}
+                className="flex-shrink-0 overflow-y-auto border-r border-gray-200 p-3"
+              >
+                <FilterPanel
+                  info={info}
+                  arrowData={arrowData}
+                  bitmasks={bitmasks}
+                  activeFilters={activeFilters}
+                  filteredMask={filteredMask}
+                  yearRange={yearRange}
+                  totalVisible={totalVisible}
+                  onSetGroup={setGroupFilters}
+                  onYearRange={handleYearRange}
+                  onClear={clearFilters}
+                />
+              </aside>
 
-          <ResizeHandle
-            onDelta={dx =>
-              setFilterWidth(w => Math.max(MIN_PANEL, Math.min(MAX_PANEL, w + dx)))
-            }
-          />
+              <ResizeHandle
+                onDelta={dx =>
+                  setFilterWidth(w => Math.max(MIN_PANEL, Math.min(MAX_PANEL, w + dx)))
+                }
+              />
+            </>
+          )}
 
           <main className="flex-1 overflow-hidden flex flex-col">
             {/* View toggle */}
@@ -153,6 +160,17 @@ export default function App() {
               <ViewTab label="Table"      active={viewMode === 'table'}    onClick={() => setViewMode('table')} />
               <ViewTab label="Ecosystems" active={viewMode === 'get'}      onClick={() => setViewMode('get')} />
               <ViewTab label="Threats"    active={viewMode === 'threats'}  onClick={() => setViewMode('threats')} />
+              <ViewTab label="Matrix"     active={viewMode === 'matrix'}   onClick={() => setViewMode('matrix')} />
+              <div className="ml-auto flex items-center gap-2">
+                <PanelToggle
+                  label={filtersOpen ? 'Hide filters' : 'Show filters'}
+                  onClick={() => setFiltersOpen(v => !v)}
+                />
+                <PanelToggle
+                  label={resultsOpen ? 'Hide results' : 'Show results'}
+                  onClick={() => setResultsOpen(v => !v)}
+                />
+              </div>
             </div>
             <div className="flex-1 overflow-hidden relative">
               {viewMode === 'scatter' ? (
@@ -180,6 +198,14 @@ export default function App() {
                   activeFilters={activeFilters}
                   onLabelClick={handleLabelClick}
                 />
+              ) : viewMode === 'matrix' ? (
+                <MatrixView
+                  info={info}
+                  bitmasks={bitmasks}
+                  filteredMask={filteredMask}
+                  activeFilters={activeFilters}
+                  onSetGroup={setGroupFilters}
+                />
               ) : (
                 <TableView
                   arrowData={arrowData}
@@ -193,24 +219,28 @@ export default function App() {
             </div>
           </main>
 
-          <ResizeHandle
-            onDelta={dx =>
-              setResultsWidth(w => Math.max(MIN_PANEL, Math.min(MAX_PANEL, w - dx)))
-            }
-          />
+          {resultsOpen && (
+            <>
+              <ResizeHandle
+                onDelta={dx =>
+                  setResultsWidth(w => Math.max(MIN_PANEL, Math.min(MAX_PANEL, w - dx)))
+                }
+              />
 
-          <aside
-            style={{ width: resultsWidth, minWidth: MIN_PANEL, maxWidth: MAX_PANEL }}
-            className="flex-shrink-0 overflow-y-auto border-l border-gray-200"
-          >
-            <ResultsList
-              filteredMask={filteredMask}
-              arrowData={arrowData}
-              totalVisible={totalVisible}
-              selection={scatterSelection}
-              onClearSelection={() => setScatterSelection(null)}
-            />
-          </aside>
+              <aside
+                style={{ width: resultsWidth, minWidth: MIN_PANEL, maxWidth: MAX_PANEL }}
+                className="flex-shrink-0 overflow-y-auto border-l border-gray-200"
+              >
+                <ResultsList
+                  filteredMask={filteredMask}
+                  arrowData={arrowData}
+                  totalVisible={totalVisible}
+                  selection={scatterSelection}
+                  onClearSelection={() => setScatterSelection(null)}
+                />
+              </aside>
+            </>
+          )}
         </div>
       )}
     </div>
@@ -226,6 +256,17 @@ function ViewTab({ label, active, onClick }) {
           ? 'bg-amber-700 text-white'
           : 'text-gray-500 hover:text-gray-800 hover:bg-gray-100'
         }`}
+    >
+      {label}
+    </button>
+  )
+}
+
+function PanelToggle({ label, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="px-2 py-1 text-xs rounded border border-gray-200 text-gray-600 hover:text-gray-800 hover:border-gray-300 hover:bg-gray-50"
     >
       {label}
     </button>

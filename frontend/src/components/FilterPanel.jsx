@@ -51,6 +51,7 @@ export default function FilterPanel({
           yearRange={yearRange}
           onYearRange={onYearRange}
           info={info}
+          filteredMask={filteredMask}
         />
       )}
 
@@ -84,20 +85,25 @@ export default function FilterPanel({
   )
 }
 
-function YearHistogram({ arrowData, yearRange, onYearRange, info }) {
+function YearHistogram({ arrowData, yearRange, onYearRange, info, filteredMask }) {
   const containerRef = useRef(null)
   const [minYear, maxYear] = yearRange
 
   // Count documents per year from arrowData
   const yearCounts = useMemo(() => {
-    if (!arrowData) return {}
-    const counts = {}
+    if (!arrowData) return { total: {}, filtered: {} }
+    const total = {}
+    const filtered = {}
+    const hasFilter = !!filteredMask
     for (let i = 0; i < arrowData.length; i++) {
       const y = arrowData.year[i]
-      counts[y] = (counts[y] || 0) + 1
+      total[y] = (total[y] || 0) + 1
+      if (hasFilter && (filteredMask[i >> 3] & (1 << (i & 7)))) {
+        filtered[y] = (filtered[y] || 0) + 1
+      }
     }
-    return counts
-  }, [arrowData])
+    return { total, filtered }
+  }, [arrowData, filteredMask])
 
   // Render bar chart with Plot
   useEffect(() => {
@@ -105,8 +111,11 @@ function YearHistogram({ arrowData, yearRange, onYearRange, info }) {
     const startYear = info.start_year
     const endYear = info.end_year
     const data = []
+    const hasFilter = !!filteredMask
     for (let y = startYear; y <= endYear; y++) {
-      data.push({ year: y, count: yearCounts[y] || 0, selected: y >= minYear && y <= maxYear })
+      const total = yearCounts.total[y] || 0
+      const filtered = hasFilter ? (yearCounts.filtered[y] || 0) : total
+      data.push({ year: y, total, filtered })
     }
     const plot = Plot.plot({
       width: containerRef.current.clientWidth || 220,
@@ -120,8 +129,16 @@ function YearHistogram({ arrowData, yearRange, onYearRange, info }) {
       marks: [
         Plot.rectY(data, {
           x: 'year',
-          y: 'count',
-          fill: d => d.selected ? '#92400e' : '#e5e7eb',
+          y: 'total',
+          fill: '#e5e7eb',
+          rx: 1,
+          insetLeft: 0.5,
+          insetRight: 0.5,
+        }),
+        Plot.rectY(data, {
+          x: 'year',
+          y: 'filtered',
+          fill: '#92400e',
           rx: 1,
           insetLeft: 0.5,
           insetRight: 0.5,
@@ -131,7 +148,7 @@ function YearHistogram({ arrowData, yearRange, onYearRange, info }) {
     containerRef.current.innerHTML = ''
     containerRef.current.appendChild(plot)
     return () => plot.remove?.()
-  }, [yearCounts, minYear, maxYear, info])
+  }, [yearCounts, info, filteredMask])
 
   return (
     <div className="mb-5">

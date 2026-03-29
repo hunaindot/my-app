@@ -21,7 +21,9 @@ export default function Scatterplot({ arrowData, filteredMask, bitmasks, info, s
   const [brush,   setBrush]   = useState(null)   // { x1,y1,x2,y2 } px
   const [xDomain, setXDomain] = useState(null)   // null = auto-fit to data
   const [yDomain, setYDomain] = useState(null)
-  const [panMode, setPanMode] = useState(false)  // false = select, true = pan
+  const [panMode, setPanMode] = useState(true)  // false = select, true = pan
+  const PAN_SENSITIVITY = 0.65
+  const ZOOM_SENSITIVITY = 0.0015
 
   // ── Full data extent (for zoom-level calculation) ─────────────────────────
   const dataExtent = useMemo(() => {
@@ -238,7 +240,7 @@ export default function Scatterplot({ arrowData, filteredMask, bitmasks, info, s
     isDragging.current = true
 
     if (panMode) {
-      panFn.current(dx, dy)
+      panFn.current(dx * PAN_SENSITIVITY, dy * PAN_SENSITIVITY)
       dragStart.current = pos   // incremental delta: update anchor each move
     } else {
       setBrush({
@@ -306,6 +308,16 @@ export default function Scatterplot({ arrowData, filteredMask, bitmasks, info, s
     isDragging.current = false
   }
 
+  function onWheel(e) {
+    if (!zoomFn.current) return
+    e.preventDefault()
+    const pos = getPos(e)
+    const delta = e.deltaY
+    const step = Math.min(0.35, Math.abs(delta) * ZOOM_SENSITIVITY)
+    const factor = delta > 0 ? 1 + step : 1 / (1 + step)
+    zoomFn.current(pos.x, pos.y, factor)
+  }
+
   const isZoomed = xDomain !== null
 
   return (
@@ -317,6 +329,7 @@ export default function Scatterplot({ arrowData, filteredMask, bitmasks, info, s
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
       onMouseLeave={onMouseLeave}
+      onWheel={onWheel}
     >
       <div ref={containerRef} className="w-full h-full" style={{ pointerEvents: 'none' }} />
 

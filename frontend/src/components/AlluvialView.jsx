@@ -88,7 +88,7 @@ export default function AlluvialView({
           onMouseLeave={() => setHoveredId(null)}
         >
           {/* Column headers */}
-          {(['l0', 'l1', 'l2']).map((col, i) => (
+          {(['l0', 'l1', 'l2'].slice(0, numLevels)).map((col, i) => (
             <text key={col} x={COL_X[col] + NODE_W / 2} y={16}
               textAnchor="middle" fontSize={11} fontWeight="600" fill="#6b7280">
               {columnLabels[i]}

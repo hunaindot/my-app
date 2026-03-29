@@ -112,6 +112,21 @@ export function countWithinFilter(filteredMask, labelMask, byteLength) {
 }
 
 /**
+ * Count records that match both masks, optionally constrained by filteredMask.
+ */
+export function countIntersection(maskA, maskB, filteredMask, byteLength) {
+  if (!maskA || !maskB) return 0
+  const len = byteLength ?? Math.min(maskA.length, maskB.length)
+  let n = 0
+  if (filteredMask) {
+    for (let i = 0; i < len; i++) n += POPCOUNT[maskA[i] & maskB[i] & filteredMask[i]]
+  } else {
+    for (let i = 0; i < len; i++) n += POPCOUNT[maskA[i] & maskB[i]]
+  }
+  return n
+}
+
+/**
  * Build a bitmask for records whose year falls within [minYear, maxYear].
  * Returns null if the range covers everything (no filtering needed).
  */
