@@ -8,13 +8,20 @@
 import { useState, useMemo, useEffect } from 'react'
 import { getIndices } from '../utils/bitmask'
 
-// Columns shown in the table (subset of all groups — keeps it readable)
-const COLUMNS = ['drivers', 'realm', 'study_design', 'direction']
-
 const PAGE_SIZE = 25
 
 export default function TableView({ arrowData, filteredMask, bitmasks, info, selection, onSelect }) {
   const [page, setPage] = useState(0)
+
+  // Use all available groups from info.json; keep a sensible order for readability
+  const columns = useMemo(() => {
+    if (!info?.groups) return []
+    const preferredOrder = ['drivers', 'study_design', 'direction', 'threats', 'realm', 'region']
+    const keys = Object.keys(info.groups)
+    const ordered = preferredOrder.filter(k => keys.includes(k))
+    const remainder = keys.filter(k => !preferredOrder.includes(k))
+    return [...ordered, ...remainder]
+  }, [info])
 
   // Reset page when filter changes
   useEffect(() => { setPage(0) }, [filteredMask])
@@ -43,7 +50,7 @@ export default function TableView({ arrowData, filteredMask, bitmasks, info, sel
               <th className="text-left px-3 py-2 font-semibold text-gray-600 w-8">#</th>
               <th className="text-left px-3 py-2 font-semibold text-gray-600">Title</th>
               <th className="text-left px-3 py-2 font-semibold text-gray-600 w-12">Year</th>
-              {COLUMNS.map(col => (
+              {columns.map(col => (
                 <th key={col} className="text-left px-3 py-2 font-semibold text-gray-600 whitespace-nowrap">
                   {info.groups[col]?.name ?? col}
                 </th>
@@ -61,6 +68,7 @@ export default function TableView({ arrowData, filteredMask, bitmasks, info, sel
                   arrowData={arrowData}
                   bitmasks={bitmasks}
                   info={info}
+                  columns={columns}
                   isSelected={isSelected}
                   onClick={() => onSelect(isSelected ? null : new Int32Array([idx]))}
                 />
@@ -99,11 +107,11 @@ export default function TableView({ arrowData, filteredMask, bitmasks, info, sel
   )
 }
 
-function TableRow({ rowNum, idx, arrowData, bitmasks, info, isSelected, onClick }) {
+function TableRow({ rowNum, idx, arrowData, bitmasks, info, columns, isSelected, onClick }) {
   // Reconstruct label names for this record from bitmasks
   const labels = useMemo(() => {
     const result = {}
-    for (const col of COLUMNS) {
+    for (const col of columns) {
       const group = info.groups[col]
       if (!group) { result[col] = []; continue }
       const matching = []
@@ -142,7 +150,7 @@ function TableRow({ rowNum, idx, arrowData, bitmasks, info, isSelected, onClick 
       <td className="px-3 py-2 text-gray-600 tabular-nums whitespace-nowrap">
         {arrowData.year[idx]}
       </td>
-      {COLUMNS.map(col => (
+      {columns.map(col => (
         <td key={col} className="px-3 py-2">
           <div className="flex flex-wrap gap-0.5">
             {labels[col]?.length > 0
