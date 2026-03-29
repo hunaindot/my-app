@@ -121,6 +121,8 @@ print(f"✓  {total_bitmasks} bitmask files  →  {BITMASK_DIR}")
 
 # ── Build label name lookup tables ────────────────────────────────────────────
 def label_names(group_key: str) -> dict[int, str]:
+    if group_key not in groups:
+        return {}
     return {
         i: v["name"]
         for i, (_, v) in enumerate(groups[group_key]["labels"].items())
@@ -161,14 +163,15 @@ conn.execute("CREATE INDEX IF NOT EXISTS idx_documents_id ON documents(id)")
 
 adj = ["tropical", "temperate", "arctic", "boreal", "subtropical", "montane"]
 rows = []
+fallback_empty = [[] for _ in range(N)]
 for i in range(N):
-    drv   = record_labels["drivers"][i]
-    thr   = record_labels["threats"][i]
-    rlm   = record_labels["realm"][i]
-    std   = record_labels["study_design"][i]
-    kin   = record_labels["kingdom"][i]
-    reg   = record_labels["region"][i]
-    dire  = record_labels["direction"][i]
+    drv   = record_labels.get("drivers",   fallback_empty)[i]
+    thr   = record_labels.get("threats",   fallback_empty)[i]
+    rlm   = record_labels.get("realm",     fallback_empty)[i]
+    std   = record_labels.get("study_design", [None]*N)[i]
+    kin   = record_labels.get("kingdom",   fallback_empty)[i]
+    reg   = record_labels.get("region",    fallback_empty)[i]
+    dire  = record_labels.get("direction", [None]*N)[i]
 
     rows.append((
         int(ids[i]),

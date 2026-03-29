@@ -13,51 +13,55 @@ for (let i = 0; i < 256; i++) {
   POPCOUNT[i] = n
 }
 
-/** Load all bitmasks defined in info.json into a flat key → Uint8Array map */
+// Helpers to index masks
+function maskFor(bitmasks, groupKey, labelId) {
+  return bitmasks?.[groupKey]?.[labelId] ?? null
+}
+
+function byteLengthOf(bitmasks) {
+  const firstGroup = Object.values(bitmasks ?? {})[0]
+  const firstMask = firstGroup && Object.values(firstGroup)[0]
+  return firstMask?.length ?? 0
+}
+
+/** Load all bitmasks defined in info.json into a nested map group → labelId → Uint8Array */
 export async function loadAllBitmasks(info, basePath = './data/bitmasks/') {
-  const entries = []
-  for (const [groupKey, group] of Object.entries(info.groups)) {
-    for (const labelKey of Object.keys(group.labels)) {
-      // labelKey is e.g. "drivers|0"
-      entries.push(
-        fetch(`${basePath}${labelKey.replace('|', '__')}.bin`)
-          .then(r => r.arrayBuffer())
-          .then(buf => [labelKey, new Uint8Array(buf)])
-      )
-    }
-  }
-  const results = await Promise.all(entries)
-  return Object.fromEntries(results)
+  const groupEntries = await Promise.all(Object.entries(info.groups).map(async ([groupKey, group]) => {
+    const labelEntries = await Promise.all(Object.values(group.labels).map(async (label) => {
+      const file = label.bitmask_file ?? `${groupKey}__${label.id}.bin`
+      const res = await fetch(`${basePath}${file}`)
+      const buf = await res.arrayBuffer()
+      return [label.id, new Uint8Array(buf)]
+    }))
+    return [groupKey, Object.fromEntries(labelEntries)]
+  }))
+  return Object.fromEntries(groupEntries)
 }
 
 /**
  * Compute the combined filter mask from activeFilters.
  * Semantics: OR within a group, AND between groups.
  *
- * activeFilters: { drivers: Set([0, 2]), realm: Set([1]) }
- * info: { groups: { drivers: { labels: { 'drivers|0': {...}, ... } } } }
+ * activeFilters: { drivers: Set(['drivers|0']), realm: Set(['T1']) }
  */
 export function computeFilterMask(bitmasks, activeFilters, info) {
   const groupKeys = Object.keys(activeFilters)
   if (groupKeys.length === 0) return null  // no filter = show all
 
-  const byteLength = Object.values(bitmasks)[0]?.length ?? 0
+  const byteLength = byteLengthOf(bitmasks)
   let result = null
 
   for (const groupKey of groupKeys) {
-    const selectedIndices = activeFilters[groupKey]
-    if (!selectedIndices || selectedIndices.size === 0) continue
+    const selectedIds = activeFilters[groupKey]
+    if (!selectedIds || selectedIds.size === 0) continue
 
-    // OR within this group
     const groupMask = new Uint8Array(byteLength)
-    for (const labelIdx of selectedIndices) {
-      const key = `${groupKey}|${labelIdx}`
-      const mask = bitmasks[key]
+    for (const id of selectedIds) {
+      const mask = maskFor(bitmasks, groupKey, id)
       if (!mask) continue
       for (let j = 0; j < byteLength; j++) groupMask[j] |= mask[j]
     }
 
-    // AND with running result
     if (result === null) {
       result = groupMask
     } else {
@@ -136,4 +140,52 @@ export function combineMasks(a, b) {
   const result = new Uint8Array(a)
   for (let i = 0; i < result.length; i++) result[i] &= b[i]
   return result
+}
+
+/**
+ * Return a flattened array of labels for a group in depth-first order.
+ * Convenience for rendering tree UIs.
+ */
+export function flattenGroupLabels(group) {
+  const labels = group.labels
+  const roots = Object.values(labels).filter(l => !l.parent)
+  const out = []
+
+  function dfs(node) {
+    out.push(node)
+    const children = (node.children || []).map(id => labels[id]).filter(Boolean)
+    children.sort((a, b) => a.name.localeCompare(b.name))
+    for (const child of children) dfs(child)
+  }
+  roots.sort((a, b) => a.name.localeCompare(b.name))
+  for (const r of roots) dfs(r)
+  return out
+}
+
+/** Determine if a label should show as selected/partial for tri-state UI */
+export function triState(labelId, activeSet, group) {
+  if (activeSet.has(labelId)) return 'checked'
+  const labels = group.labels
+  const hasChild = (labels[labelId]?.children || []).some(id => triState(id, activeSet, group) !== 'none')
+  return hasChild ? 'partial' : 'none'
+}
+
+/** Toggle selection respecting parent-child semantics */
+export function toggleLabel(activeSet, labelId, group) {
+  const next = new Set(activeSet)
+  const labels = group.labels
+  const removeDesc = (id) => {
+    next.delete(id)
+    for (const c of labels[id]?.children || []) removeDesc(c)
+  }
+
+  if (next.has(labelId)) {
+    // Deselect label and all descendants
+    removeDesc(labelId)
+  } else {
+    // Select label, remove any descendants to avoid redundancy
+    removeDesc(labelId)
+    next.add(labelId)
+  }
+  return next
 }

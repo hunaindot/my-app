@@ -107,8 +107,11 @@ function TableRow({ rowNum, idx, arrowData, bitmasks, info, isSelected, onClick 
       const group = info.groups[col]
       if (!group) { result[col] = []; continue }
       const matching = []
-      for (const [labelKey, label] of Object.entries(group.labels)) {
-        const mask = bitmasks[labelKey]
+      const masksForGroup = bitmasks[col] || {}
+      const labels = Object.values(group.labels)
+      const leaves = labels.filter(l => !l.children || l.children.length === 0)
+      for (const label of leaves) {
+        const mask = masksForGroup[label.id]
         if (mask && (mask[idx >> 3] & (1 << (idx & 7)))) {
           matching.push({ name: label.name, colour: label.colour })
         }

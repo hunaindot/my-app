@@ -28,10 +28,10 @@ export default function Scatterplot({ arrowData, filteredMask, bitmasks, info, s
     if (!arrowData || !bitmasks || !info) return null
     const n = arrowData.length
     const colors = new Array(n).fill(null)
-    const entries = Object.entries(info.groups.drivers.labels)
-    for (let li = 0; li < entries.length; li++) {
-      const [labelKey, label] = entries[li]
-      const mask = bitmasks[labelKey]
+    const masksForGroup = bitmasks.drivers || {}
+    const entries = Object.values(info.groups.drivers.labels)
+    for (const label of entries) {
+      const mask = masksForGroup[label.id]
       if (!mask) continue
       const [h, s, l] = label.colour
       const colorStr = `hsl(${h},${s}%,${l}%)`

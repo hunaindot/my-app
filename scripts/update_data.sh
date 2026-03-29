@@ -12,15 +12,15 @@ ROOT="$SCRIPT_DIR/.."
 echo "=== Step 1: Regenerate static files ==="
 cd "$SCRIPT_DIR"
 
-PARQUET="$ROOT/data/systematic_map.parquet"
-if [ -f "$PARQUET" ]; then
+# Prefer real parquet if present; fall back to mock otherwise
+PARQUET="$(ls "$ROOT"/data/*.parq* 2>/dev/null | head -n 1)"
+if [ -n "$PARQUET" ]; then
     echo "Found $PARQUET — running full pipeline"
-    python compute_umap.py
     python export_arrow.py
     python export_bitmasks.py
     python export_sqlite.py
 else
-    echo "WARNING: $PARQUET not found — generating mock data instead"
+    echo "WARNING: no data/*.parq* found — generating mock data instead"
     python generate_mock_data.py
 fi
 

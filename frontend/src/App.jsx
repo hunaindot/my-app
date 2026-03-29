@@ -55,14 +55,13 @@ export default function App() {
     setScatterSelection(null)
   }, [activeFilters, yearRange])
 
-  function toggleFilter(groupKey, labelIndex) {
+  function setGroupFilters(groupKey, updater) {
     setActiveFilters(prev => {
       const next = { ...prev }
-      if (!next[groupKey]) next[groupKey] = new Set()
-      else next[groupKey] = new Set(next[groupKey])
-      if (next[groupKey].has(labelIndex)) next[groupKey].delete(labelIndex)
-      else next[groupKey].add(labelIndex)
-      if (next[groupKey].size === 0) delete next[groupKey]
+      const current = new Set(prev[groupKey] ?? [])
+      const updated = updater(current)
+      if (updated.size === 0) delete next[groupKey]
+      else next[groupKey] = updated
       return next
     })
   }
@@ -126,7 +125,7 @@ export default function App() {
               filteredMask={filteredMask}
               yearRange={yearRange}
               totalVisible={totalVisible}
-              onToggle={toggleFilter}
+              onSetGroup={setGroupFilters}
               onYearRange={handleYearRange}
               onClear={clearFilters}
             />
@@ -238,8 +237,11 @@ function downloadCSV(arrowData, filteredMask, bitmasks, info) {
     const labelCols = groupKeys.map(groupKey => {
       const group = info.groups[groupKey]
       const names = []
-      for (const [labelKey, label] of Object.entries(group.labels)) {
-        const mask = bitmasks[labelKey]
+      const masksForGroup = bitmasks[groupKey] || {}
+      // prefer leaves to avoid double-reporting parent + child
+      const labels = Object.values(group.labels).filter(l => !l.children || l.children.length === 0)
+      for (const label of labels) {
+        const mask = masksForGroup[label.id]
         if (mask && (mask[idx >> 3] & (1 << (idx & 7)))) names.push(label.name)
       }
       return names.join('; ')

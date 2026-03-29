@@ -4,9 +4,9 @@
  * Left sidebar. Year histogram at top, then tag-cloud per label group.
  * All label definitions read from info.json — never hardcoded.
  */
-import { useRef, useEffect, useMemo } from 'react'
+import { useRef, useEffect, useMemo, useState } from 'react'
 import * as Plot from '@observablehq/plot'
-import { countBits, countWithinFilter } from '../utils/bitmask'
+import { countWithinFilter, triState, toggleLabel } from '../utils/bitmask'
 
 export default function FilterPanel({
   info,
@@ -16,12 +16,14 @@ export default function FilterPanel({
   filteredMask,
   yearRange,
   totalVisible,
-  onToggle,
+  onSetGroup,
   onYearRange,
   onClear,
 }) {
   if (!info) return null
-  const byteLength = Object.values(bitmasks)[0]?.length ?? 0
+  const firstGroup = Object.values(bitmasks ?? {})[0]
+  const firstMask = firstGroup && Object.values(firstGroup)[0]
+  const byteLength = firstMask?.length ?? 0
   const hasFilters = Object.keys(activeFilters).length > 0 ||
     (yearRange && (yearRange[0] > info.start_year || yearRange[1] < info.end_year))
 
@@ -53,18 +55,31 @@ export default function FilterPanel({
       )}
 
       {/* One tag-cloud section per label group */}
-      {Object.entries(info.groups).map(([groupKey, group]) => (
-        <FilterGroup
-          key={groupKey}
-          groupKey={groupKey}
-          group={group}
-          bitmasks={bitmasks}
-          filteredMask={filteredMask}
-          activeFilters={activeFilters}
-          byteLength={byteLength}
-          onToggle={onToggle}
-        />
-      ))}
+      {Object.entries(info.groups).map(([groupKey, group]) =>
+        group.type === 'hierarchical' ? (
+          <HierGroup
+            key={groupKey}
+            groupKey={groupKey}
+            group={group}
+            bitmasks={bitmasks}
+            filteredMask={filteredMask}
+            activeFilters={activeFilters}
+            byteLength={byteLength}
+            onSetGroup={onSetGroup}
+          />
+        ) : (
+          <FilterGroup
+            key={groupKey}
+            groupKey={groupKey}
+            group={group}
+            bitmasks={bitmasks}
+            filteredMask={filteredMask}
+            activeFilters={activeFilters}
+            byteLength={byteLength}
+            onSetGroup={onSetGroup}
+          />
+        )
+      )}
     </div>
   )
 }
@@ -150,7 +165,7 @@ function YearHistogram({ arrowData, yearRange, onYearRange, info }) {
   )
 }
 
-function FilterGroup({ groupKey, group, bitmasks, filteredMask, activeFilters, byteLength, onToggle }) {
+function FilterGroup({ groupKey, group, bitmasks, filteredMask, activeFilters, byteLength, onSetGroup }) {
   const selected = activeFilters[groupKey] ?? new Set()
 
   return (
@@ -159,10 +174,9 @@ function FilterGroup({ groupKey, group, bitmasks, filteredMask, activeFilters, b
         {group.name}
       </div>
       <div className="flex flex-wrap gap-1">
-        {Object.entries(group.labels).map(([labelKey, label]) => {
-          const idx = parseInt(labelKey.split('|')[1])
-          const isActive = selected.has(idx)
-          const mask = bitmasks[labelKey]
+        {Object.values(group.labels).map(label => {
+          const isActive = selected.has(label.id)
+          const mask = bitmasks[groupKey]?.[label.id]
           const count = mask ? countWithinFilter(filteredMask, mask, byteLength) : 0
 
           const [h, s, l] = label.colour ?? [210, 50, 50]
@@ -171,8 +185,13 @@ function FilterGroup({ groupKey, group, bitmasks, filteredMask, activeFilters, b
 
           return (
             <button
-              key={labelKey}
-              onClick={() => onToggle(groupKey, idx)}
+              key={label.id}
+              onClick={() => onSetGroup(groupKey, set => {
+                const next = new Set(set)
+                if (next.has(label.id)) next.delete(label.id)
+                else next.add(label.id)
+                return next
+              })}
               style={{ backgroundColor: bg, color: fg }}
               className="text-xs px-2 py-0.5 rounded-full border border-transparent
                          hover:opacity-80 transition-opacity flex items-center gap-1"
@@ -182,6 +201,79 @@ function FilterGroup({ groupKey, group, bitmasks, filteredMask, activeFilters, b
             </button>
           )
         })}
+      </div>
+    </div>
+  )
+}
+
+function HierGroup({ groupKey, group, bitmasks, filteredMask, activeFilters, byteLength, onSetGroup }) {
+  const activeSet = activeFilters[groupKey] ?? new Set()
+  const [expanded, setExpanded] = useState(new Set(Object.values(group.labels).filter(l => !l.parent).map(l => l.id)))
+
+  const labels = group.labels
+
+  function renderNode(label) {
+    const children = (label.children || []).map(id => labels[id]).filter(Boolean)
+    const state = triState(label.id, activeSet, group)
+    const mask = bitmasks[groupKey]?.[label.id]
+    const count = mask ? countWithinFilter(filteredMask, mask, byteLength) : 0
+    const isExpanded = expanded.has(label.id)
+
+    const toggleExpand = () => {
+      setExpanded(prev => {
+        const next = new Set(prev)
+        if (next.has(label.id)) next.delete(label.id)
+        else next.add(label.id)
+        return next
+      })
+    }
+
+    return (
+      <div key={label.id} className="mb-1">
+        <div className="flex items-center gap-1 text-xs">
+          {children.length > 0 ? (
+            <button
+              onClick={toggleExpand}
+              className="w-4 text-gray-400 hover:text-gray-700"
+              title={isExpanded ? 'Collapse' : 'Expand'}
+            >
+              {isExpanded ? '▾' : '▸'}
+            </button>
+          ) : (
+            <span className="w-4" />
+          )}
+
+          <button
+            onClick={() => onSetGroup(groupKey, set => toggleLabel(set, label.id, group))}
+            className={`flex-1 text-left px-2 py-1 rounded transition-colors
+              ${state === 'checked' ? 'bg-amber-700 text-white'
+                : state === 'partial' ? 'bg-amber-100 text-amber-900'
+                : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
+            style={{ borderLeft: `3px solid hsl(${(label.colour||[30,50,50])[0]}, ${(label.colour||[30,50,50])[1]}%, ${(label.colour||[30,50,50])[2]}%)` }}
+          >
+            <span>{label.name}</span>
+            <span className="ml-2 text-[10px] opacity-70">{count.toLocaleString()}</span>
+          </button>
+        </div>
+
+        {children.length > 0 && isExpanded && (
+          <div className="ml-5 mt-1 border-l border-gray-100 pl-2">
+            {children.sort((a, b) => a.name.localeCompare(b.name)).map(renderNode)}
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  const roots = Object.values(labels).filter(l => !l.parent).sort((a, b) => a.name.localeCompare(b.name))
+
+  return (
+    <div className="mb-5">
+      <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2 flex items-center justify-between">
+        <span>{group.name}</span>
+      </div>
+      <div>
+        {roots.map(renderNode)}
       </div>
     </div>
   )

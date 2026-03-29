@@ -30,9 +30,10 @@ pg_conn.autocommit = False
 
 # ── Create table & clear old data ────────────────────────────────────────────
 with pg_conn.cursor() as cur:
+    cur.execute("DROP TABLE IF EXISTS documents")
     cur.execute("""
-        CREATE TABLE IF NOT EXISTS documents (
-            id           INTEGER PRIMARY KEY,
+        CREATE TABLE documents (
+            id           TEXT PRIMARY KEY,
             title        TEXT,
             abstract     TEXT,
             year         SMALLINT,
@@ -49,9 +50,8 @@ with pg_conn.cursor() as cur:
             direction    TEXT
         )
     """)
-    cur.execute("TRUNCATE TABLE documents")
     pg_conn.commit()
-    print("Table ready (truncated).")
+    print("Table ready (dropped & recreated).")
 
 # ── Migrate ───────────────────────────────────────────────────────────────────
 rows = sqlite_conn.execute("SELECT * FROM documents").fetchall()
