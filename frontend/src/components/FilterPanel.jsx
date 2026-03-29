@@ -208,9 +208,31 @@ function FilterGroup({ groupKey, group, bitmasks, filteredMask, activeFilters, b
 
 function HierGroup({ groupKey, group, bitmasks, filteredMask, activeFilters, byteLength, onSetGroup }) {
   const activeSet = activeFilters[groupKey] ?? new Set()
-  const [expanded, setExpanded] = useState(new Set(Object.values(group.labels).filter(l => !l.parent).map(l => l.id)))
+  const [expanded, setExpanded] = useState(new Set())
 
   const labels = group.labels
+
+  // Auto-expand ancestors of active labels so users can see their context,
+  // but keep everything else collapsed by default. Preserve any manual
+  // expand/collapse the user does.
+  useEffect(() => {
+    const next = new Set()
+    const ancestors = (id) => {
+      const chain = []
+      let cur = id
+      while (cur && labels[cur]) {
+        chain.push(cur)
+        cur = labels[cur].parent
+      }
+      return chain
+    }
+    activeSet.forEach(id => ancestors(id).forEach(a => next.add(a)))
+    setExpanded(prev => {
+      const merged = new Set(prev)
+      next.forEach(a => merged.add(a))
+      return merged
+    })
+  }, [activeSet, labels])
 
   function renderNode(label) {
     const children = (label.children || []).map(id => labels[id]).filter(Boolean)

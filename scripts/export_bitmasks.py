@@ -31,7 +31,7 @@ ECOSYSTEM_PATH = ROOT / "mappings" / "ecosystem_typology_1_3.json"
 REGIONS_PATH = ROOT / "mappings" / "ipbes_regions.json"
 
 # Toggle: emit per-country labels/masks? Set False to keep only region+subregion
-EMIT_COUNTRY_LABELS = False
+EMIT_COUNTRY_LABELS = True
 
 # Synonym maps (normalized tokens → canonical ids)
 DRIVER_SYNONYMS = {

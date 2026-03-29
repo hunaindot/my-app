@@ -10,17 +10,28 @@ import { getIndices } from '../utils/bitmask'
 
 const PAGE_SIZE = 25
 
+// Column configuration: key, source group in info/bitmasks, title override, and label filter
+const COLUMN_CONFIG = [
+  { key: 'drivers', group: 'drivers' },
+  { key: 'study_design', group: 'study_design' },
+  { key: 'direction', group: 'direction' },
+  // IUCN threats: separate level 0 and level 1
+  { key: 'threats_l0', group: 'threats', title: 'IUCN threats (L0)', filter: l => l.level === 0 },
+  { key: 'threats_l1', group: 'threats', title: 'IUCN threats (L1)', filter: l => l.level === 1 },
+  // Geography: region, subregion, country/sub-national combined
+  { key: 'region_l0', group: 'region', title: 'Region', filter: l => l.level === 0 },
+  { key: 'region_l1', group: 'region', title: 'Subregion', filter: l => l.level === 1 },
+  { key: 'region_l2', group: 'region', title: 'Country / sub-national', filter: l => l.level >= 2 },
+  { key: 'realm', group: 'realm' },
+]
+
 export default function TableView({ arrowData, filteredMask, bitmasks, info, selection, onSelect }) {
   const [page, setPage] = useState(0)
 
-  // Use all available groups from info.json; keep a sensible order for readability
   const columns = useMemo(() => {
     if (!info?.groups) return []
-    const preferredOrder = ['drivers', 'study_design', 'direction', 'threats', 'realm', 'region']
-    const keys = Object.keys(info.groups)
-    const ordered = preferredOrder.filter(k => keys.includes(k))
-    const remainder = keys.filter(k => !preferredOrder.includes(k))
-    return [...ordered, ...remainder]
+    // Only keep columns whose source group exists in info.json
+    return COLUMN_CONFIG.filter(col => info.groups[col.group])
   }, [info])
 
   // Reset page when filter changes
@@ -51,8 +62,8 @@ export default function TableView({ arrowData, filteredMask, bitmasks, info, sel
               <th className="text-left px-3 py-2 font-semibold text-gray-600">Title</th>
               <th className="text-left px-3 py-2 font-semibold text-gray-600 w-12">Year</th>
               {columns.map(col => (
-                <th key={col} className="text-left px-3 py-2 font-semibold text-gray-600 whitespace-nowrap">
-                  {info.groups[col]?.name ?? col}
+                <th key={col.key} className="text-left px-3 py-2 font-semibold text-gray-600 whitespace-nowrap">
+                  {col.title ?? info.groups[col.group]?.name ?? col.key}
                 </th>
               ))}
             </tr>
@@ -112,22 +123,22 @@ function TableRow({ rowNum, idx, arrowData, bitmasks, info, columns, isSelected,
   const labels = useMemo(() => {
     const result = {}
     for (const col of columns) {
-      const group = info.groups[col]
-      if (!group) { result[col] = []; continue }
+      const group = info.groups[col.group]
+      if (!group) { result[col.key] = []; continue }
       const matching = []
-      const masksForGroup = bitmasks[col] || {}
-      const labels = Object.values(group.labels)
-      const leaves = labels.filter(l => !l.children || l.children.length === 0)
-      for (const label of leaves) {
+      const masksForGroup = bitmasks[col.group] || {}
+      const labelsInGroup = Object.values(group.labels)
+      const candidates = col.filter ? labelsInGroup.filter(col.filter) : labelsInGroup
+      for (const label of candidates) {
         const mask = masksForGroup[label.id]
         if (mask && (mask[idx >> 3] & (1 << (idx & 7)))) {
           matching.push({ name: label.name, colour: label.colour })
         }
       }
-      result[col] = matching
+      result[col.key] = matching
     }
     return result
-  }, [idx, bitmasks, info])
+  }, [idx, bitmasks, info, columns])
 
   return (
     <tr
@@ -151,10 +162,10 @@ function TableRow({ rowNum, idx, arrowData, bitmasks, info, columns, isSelected,
         {arrowData.year[idx]}
       </td>
       {columns.map(col => (
-        <td key={col} className="px-3 py-2">
+        <td key={col.key} className="px-3 py-2">
           <div className="flex flex-wrap gap-0.5">
-            {labels[col]?.length > 0
-              ? labels[col].map(l => <LabelChip key={l.name} label={l} />)
+            {labels[col.key]?.length > 0
+              ? labels[col.key].map(l => <LabelChip key={l.name} label={l} />)
               : <span className="text-gray-300">—</span>
             }
           </div>

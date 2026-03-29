@@ -4701,7 +4701,8 @@
       "type": "hierarchical",
       "level_order": [
         "region",
-        "subregion"
+        "subregion",
+        "country"
       ],
       "labels": {
         "americas": {
@@ -4730,7 +4731,38 @@
           "name": "Caribbean",
           "level": 1,
           "parent": "americas",
-          "children": [],
+          "children": [
+            "ABW",
+            "AIA",
+            "ATG",
+            "BES",
+            "BHS",
+            "BLM",
+            "BMU",
+            "BRB",
+            "CUB",
+            "CUW",
+            "CYM",
+            "DMA",
+            "DOM",
+            "GLP",
+            "GRD",
+            "HTI",
+            "JAM",
+            "KNA",
+            "LCA",
+            "MAF",
+            "MSR",
+            "MTQ",
+            "PRI",
+            "SXM",
+            "TCA",
+            "TTO",
+            "United States Minor Outlying Islands (Navassa)",
+            "VCT",
+            "VGB",
+            "VIR"
+          ],
           "colour": [
             30,
             54.0,
@@ -4739,13 +4771,480 @@
           "count": 8,
           "bitmask_file": "region__caribbean.bin"
         },
+        "ABW": {
+          "id": "ABW",
+          "code": "ABW",
+          "name": "Aruba",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__ABW.bin"
+        },
+        "AIA": {
+          "id": "AIA",
+          "code": "AIA",
+          "name": "Anguilla",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__AIA.bin"
+        },
+        "ATG": {
+          "id": "ATG",
+          "code": "ATG",
+          "name": "Antigua and Barbuda",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__ATG.bin"
+        },
+        "BES": {
+          "id": "BES",
+          "code": "BES",
+          "name": "Bonaire, Sint Eustatius and Saba",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__BES.bin"
+        },
+        "BHS": {
+          "id": "BHS",
+          "code": "BHS",
+          "name": "Bahamas (the)",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__BHS.bin"
+        },
+        "BLM": {
+          "id": "BLM",
+          "code": "BLM",
+          "name": "Saint Barth\u00e9lemy",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__BLM.bin"
+        },
+        "BMU": {
+          "id": "BMU",
+          "code": "BMU",
+          "name": "Bermuda",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__BMU.bin"
+        },
+        "BRB": {
+          "id": "BRB",
+          "code": "BRB",
+          "name": "Barbados",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__BRB.bin"
+        },
+        "CUB": {
+          "id": "CUB",
+          "code": "CUB",
+          "name": "Cuba",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__CUB.bin"
+        },
+        "CUW": {
+          "id": "CUW",
+          "code": "CUW",
+          "name": "Cura\u00e7ao",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__CUW.bin"
+        },
+        "CYM": {
+          "id": "CYM",
+          "code": "CYM",
+          "name": "Cayman Islands (the)",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__CYM.bin"
+        },
+        "DMA": {
+          "id": "DMA",
+          "code": "DMA",
+          "name": "Dominica",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__DMA.bin"
+        },
+        "DOM": {
+          "id": "DOM",
+          "code": "DOM",
+          "name": "Dominican Republic (the)",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__DOM.bin"
+        },
+        "GLP": {
+          "id": "GLP",
+          "code": "GLP",
+          "name": "Guadeloupe",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__GLP.bin"
+        },
+        "GRD": {
+          "id": "GRD",
+          "code": "GRD",
+          "name": "Grenada",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__GRD.bin"
+        },
+        "HTI": {
+          "id": "HTI",
+          "code": "HTI",
+          "name": "Haiti",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__HTI.bin"
+        },
+        "JAM": {
+          "id": "JAM",
+          "code": "JAM",
+          "name": "Jamaica",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__JAM.bin"
+        },
+        "KNA": {
+          "id": "KNA",
+          "code": "KNA",
+          "name": "Saint Kitts and Nevis",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__KNA.bin"
+        },
+        "LCA": {
+          "id": "LCA",
+          "code": "LCA",
+          "name": "Saint Lucia",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__LCA.bin"
+        },
+        "MAF": {
+          "id": "MAF",
+          "code": "MAF",
+          "name": "Saint Martin (French part)",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MAF.bin"
+        },
+        "MSR": {
+          "id": "MSR",
+          "code": "MSR",
+          "name": "Montserrat",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MSR.bin"
+        },
+        "MTQ": {
+          "id": "MTQ",
+          "code": "MTQ",
+          "name": "Martinique",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MTQ.bin"
+        },
+        "PRI": {
+          "id": "PRI",
+          "code": "PRI",
+          "name": "Puerto Rico",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__PRI.bin"
+        },
+        "SXM": {
+          "id": "SXM",
+          "code": "SXM",
+          "name": "Sint Maarten (Dutch part)",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SXM.bin"
+        },
+        "TCA": {
+          "id": "TCA",
+          "code": "TCA",
+          "name": "Turks and Caicos Islands (the)",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__TCA.bin"
+        },
+        "TTO": {
+          "id": "TTO",
+          "code": "TTO",
+          "name": "Trinidad and Tobago",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__TTO.bin"
+        },
+        "United States Minor Outlying Islands (Navassa)": {
+          "id": "United States Minor Outlying Islands (Navassa)",
+          "code": "United States Minor Outlying Islands (Navassa)",
+          "name": "United States Minor Outlying Islands (Navassa)",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__United States Minor Outlying Islands (Navassa).bin"
+        },
+        "VCT": {
+          "id": "VCT",
+          "code": "VCT",
+          "name": "Saint Vincent and the Grenadines",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__VCT.bin"
+        },
+        "VGB": {
+          "id": "VGB",
+          "code": "VGB",
+          "name": "Virgin Islands (British)",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__VGB.bin"
+        },
+        "VIR": {
+          "id": "VIR",
+          "code": "VIR",
+          "name": "Virgin Islands (U.S.)",
+          "level": 2,
+          "parent": "caribbean",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__VIR.bin"
+        },
         "south_america": {
           "id": "south_america",
           "code": "south_america",
           "name": "South America",
           "level": 1,
           "parent": "americas",
-          "children": [],
+          "children": [
+            "ARG",
+            "BOL",
+            "BRA",
+            "BVT",
+            "CHL",
+            "COL",
+            "ECU",
+            "FLK",
+            "GUF",
+            "GUY",
+            "PER",
+            "PRY",
+            "SGS",
+            "SUR",
+            "URY",
+            "VEN"
+          ],
           "colour": [
             30,
             54.0,
@@ -4754,13 +5253,262 @@
           "count": 86,
           "bitmask_file": "region__south_america.bin"
         },
+        "ARG": {
+          "id": "ARG",
+          "code": "ARG",
+          "name": "Argentina",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 10,
+          "bitmask_file": "region__ARG.bin"
+        },
+        "BOL": {
+          "id": "BOL",
+          "code": "BOL",
+          "name": "Bolivia (Plurinational State of)",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__BOL.bin"
+        },
+        "BRA": {
+          "id": "BRA",
+          "code": "BRA",
+          "name": "Brazil",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 42,
+          "bitmask_file": "region__BRA.bin"
+        },
+        "BVT": {
+          "id": "BVT",
+          "code": "BVT",
+          "name": "Bouvet Island",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__BVT.bin"
+        },
+        "CHL": {
+          "id": "CHL",
+          "code": "CHL",
+          "name": "Chile",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 11,
+          "bitmask_file": "region__CHL.bin"
+        },
+        "COL": {
+          "id": "COL",
+          "code": "COL",
+          "name": "Colombia",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 7,
+          "bitmask_file": "region__COL.bin"
+        },
+        "ECU": {
+          "id": "ECU",
+          "code": "ECU",
+          "name": "Ecuador",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 6,
+          "bitmask_file": "region__ECU.bin"
+        },
+        "FLK": {
+          "id": "FLK",
+          "code": "FLK",
+          "name": "Falkland Islands (the) [Malvinas]",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__FLK.bin"
+        },
+        "GUF": {
+          "id": "GUF",
+          "code": "GUF",
+          "name": "French Guiana",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__GUF.bin"
+        },
+        "GUY": {
+          "id": "GUY",
+          "code": "GUY",
+          "name": "Guyana",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__GUY.bin"
+        },
+        "PER": {
+          "id": "PER",
+          "code": "PER",
+          "name": "Peru",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 7,
+          "bitmask_file": "region__PER.bin"
+        },
+        "PRY": {
+          "id": "PRY",
+          "code": "PRY",
+          "name": "Paraguay",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__PRY.bin"
+        },
+        "SGS": {
+          "id": "SGS",
+          "code": "SGS",
+          "name": "South Georgia and the South Sandwich Islands",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SGS.bin"
+        },
+        "SUR": {
+          "id": "SUR",
+          "code": "SUR",
+          "name": "Suriname",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__SUR.bin"
+        },
+        "URY": {
+          "id": "URY",
+          "code": "URY",
+          "name": "Uruguay",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 3,
+          "bitmask_file": "region__URY.bin"
+        },
+        "VEN": {
+          "id": "VEN",
+          "code": "VEN",
+          "name": "Venezuela (Bolivarian Republic of)",
+          "level": 2,
+          "parent": "south_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__VEN.bin"
+        },
         "mesoamerica": {
           "id": "mesoamerica",
           "code": "mesoamerica",
           "name": "Mesoamerica",
           "level": 1,
           "parent": "americas",
-          "children": [],
+          "children": [
+            "BLZ",
+            "CRI",
+            "GTM",
+            "HND",
+            "MEX",
+            "NIC",
+            "PAN",
+            "SLV"
+          ],
           "colour": [
             30,
             54.0,
@@ -4769,13 +5517,138 @@
           "count": 4,
           "bitmask_file": "region__mesoamerica.bin"
         },
+        "BLZ": {
+          "id": "BLZ",
+          "code": "BLZ",
+          "name": "Belize",
+          "level": 2,
+          "parent": "mesoamerica",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__BLZ.bin"
+        },
+        "CRI": {
+          "id": "CRI",
+          "code": "CRI",
+          "name": "Costa Rica",
+          "level": 2,
+          "parent": "mesoamerica",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__CRI.bin"
+        },
+        "GTM": {
+          "id": "GTM",
+          "code": "GTM",
+          "name": "Guatemala",
+          "level": 2,
+          "parent": "mesoamerica",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__GTM.bin"
+        },
+        "HND": {
+          "id": "HND",
+          "code": "HND",
+          "name": "Honduras",
+          "level": 2,
+          "parent": "mesoamerica",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__HND.bin"
+        },
+        "MEX": {
+          "id": "MEX",
+          "code": "MEX",
+          "name": "Mexico",
+          "level": 2,
+          "parent": "mesoamerica",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 21,
+          "bitmask_file": "region__MEX.bin"
+        },
+        "NIC": {
+          "id": "NIC",
+          "code": "NIC",
+          "name": "Nicaragua",
+          "level": 2,
+          "parent": "mesoamerica",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__NIC.bin"
+        },
+        "PAN": {
+          "id": "PAN",
+          "code": "PAN",
+          "name": "Panama",
+          "level": 2,
+          "parent": "mesoamerica",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__PAN.bin"
+        },
+        "SLV": {
+          "id": "SLV",
+          "code": "SLV",
+          "name": "El Salvador",
+          "level": 2,
+          "parent": "mesoamerica",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SLV.bin"
+        },
         "north_america": {
           "id": "north_america",
           "code": "north_america",
           "name": "North America",
           "level": 1,
           "parent": "americas",
-          "children": [],
+          "children": [
+            "CAN",
+            "GRL",
+            "SPM",
+            "USA"
+          ],
           "colour": [
             30,
             54.0,
@@ -4783,6 +5656,66 @@
           ],
           "count": 203,
           "bitmask_file": "region__north_america.bin"
+        },
+        "CAN": {
+          "id": "CAN",
+          "code": "CAN",
+          "name": "Canada",
+          "level": 2,
+          "parent": "north_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 41,
+          "bitmask_file": "region__CAN.bin"
+        },
+        "GRL": {
+          "id": "GRL",
+          "code": "GRL",
+          "name": "Greenland",
+          "level": 2,
+          "parent": "north_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__GRL.bin"
+        },
+        "SPM": {
+          "id": "SPM",
+          "code": "SPM",
+          "name": "Saint Pierre and Miquelon",
+          "level": 2,
+          "parent": "north_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SPM.bin"
+        },
+        "USA": {
+          "id": "USA",
+          "code": "USA",
+          "name": "United States of America (the)",
+          "level": 2,
+          "parent": "north_america",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 130,
+          "bitmask_file": "region__USA.bin"
         },
         "asia_and_the_pacific": {
           "id": "asia_and_the_pacific",
@@ -4811,7 +5744,18 @@
           "name": "South Asia",
           "level": 1,
           "parent": "asia_and_the_pacific",
-          "children": [],
+          "children": [
+            "AFG",
+            "BGD",
+            "BTN",
+            "IND",
+            "IOT",
+            "IRN",
+            "LKA",
+            "MDV",
+            "NPL",
+            "PAK"
+          ],
           "colour": [
             30,
             54.0,
@@ -4820,13 +5764,176 @@
           "count": 34,
           "bitmask_file": "region__south_asia.bin"
         },
+        "AFG": {
+          "id": "AFG",
+          "code": "AFG",
+          "name": "Afghanistan",
+          "level": 2,
+          "parent": "south_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__AFG.bin"
+        },
+        "BGD": {
+          "id": "BGD",
+          "code": "BGD",
+          "name": "Bangladesh",
+          "level": 2,
+          "parent": "south_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__BGD.bin"
+        },
+        "BTN": {
+          "id": "BTN",
+          "code": "BTN",
+          "name": "Bhutan",
+          "level": 2,
+          "parent": "south_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__BTN.bin"
+        },
+        "IND": {
+          "id": "IND",
+          "code": "IND",
+          "name": "India",
+          "level": 2,
+          "parent": "south_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 23,
+          "bitmask_file": "region__IND.bin"
+        },
+        "IOT": {
+          "id": "IOT",
+          "code": "IOT",
+          "name": "British Indian Ocean Territory (the)",
+          "level": 2,
+          "parent": "south_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__IOT.bin"
+        },
+        "IRN": {
+          "id": "IRN",
+          "code": "IRN",
+          "name": "Iran (Islamic Republic of)",
+          "level": 2,
+          "parent": "south_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 4,
+          "bitmask_file": "region__IRN.bin"
+        },
+        "LKA": {
+          "id": "LKA",
+          "code": "LKA",
+          "name": "Sri Lanka",
+          "level": 2,
+          "parent": "south_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 4,
+          "bitmask_file": "region__LKA.bin"
+        },
+        "MDV": {
+          "id": "MDV",
+          "code": "MDV",
+          "name": "Maldives",
+          "level": 2,
+          "parent": "south_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MDV.bin"
+        },
+        "NPL": {
+          "id": "NPL",
+          "code": "NPL",
+          "name": "Nepal",
+          "level": 2,
+          "parent": "south_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 3,
+          "bitmask_file": "region__NPL.bin"
+        },
+        "PAK": {
+          "id": "PAK",
+          "code": "PAK",
+          "name": "Pakistan",
+          "level": 2,
+          "parent": "south_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 4,
+          "bitmask_file": "region__PAK.bin"
+        },
         "western_asia": {
           "id": "western_asia",
           "code": "western_asia",
           "name": "Western Asia",
           "level": 1,
           "parent": "asia_and_the_pacific",
-          "children": [],
+          "children": [
+            "ARE",
+            "BHR",
+            "IRQ",
+            "JOR",
+            "KWT",
+            "LBN",
+            "OMN",
+            "PSE",
+            "QAT",
+            "SAU",
+            "SYR",
+            "YEM"
+          ],
           "colour": [
             30,
             54.0,
@@ -4835,13 +5942,224 @@
           "count": 20,
           "bitmask_file": "region__western_asia.bin"
         },
+        "ARE": {
+          "id": "ARE",
+          "code": "ARE",
+          "name": "United Arab Emirates (the)",
+          "level": 2,
+          "parent": "western_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__ARE.bin"
+        },
+        "BHR": {
+          "id": "BHR",
+          "code": "BHR",
+          "name": "Bahrain",
+          "level": 2,
+          "parent": "western_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__BHR.bin"
+        },
+        "IRQ": {
+          "id": "IRQ",
+          "code": "IRQ",
+          "name": "Iraq",
+          "level": 2,
+          "parent": "western_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__IRQ.bin"
+        },
+        "JOR": {
+          "id": "JOR",
+          "code": "JOR",
+          "name": "Jordan",
+          "level": 2,
+          "parent": "western_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__JOR.bin"
+        },
+        "KWT": {
+          "id": "KWT",
+          "code": "KWT",
+          "name": "Kuwait",
+          "level": 2,
+          "parent": "western_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__KWT.bin"
+        },
+        "LBN": {
+          "id": "LBN",
+          "code": "LBN",
+          "name": "Lebanon",
+          "level": 2,
+          "parent": "western_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__LBN.bin"
+        },
+        "OMN": {
+          "id": "OMN",
+          "code": "OMN",
+          "name": "Oman",
+          "level": 2,
+          "parent": "western_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__OMN.bin"
+        },
+        "PSE": {
+          "id": "PSE",
+          "code": "PSE",
+          "name": "Palestine, State of",
+          "level": 2,
+          "parent": "western_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__PSE.bin"
+        },
+        "QAT": {
+          "id": "QAT",
+          "code": "QAT",
+          "name": "Qatar",
+          "level": 2,
+          "parent": "western_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__QAT.bin"
+        },
+        "SAU": {
+          "id": "SAU",
+          "code": "SAU",
+          "name": "Saudi Arabia",
+          "level": 2,
+          "parent": "western_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__SAU.bin"
+        },
+        "SYR": {
+          "id": "SYR",
+          "code": "SYR",
+          "name": "Syrian Arab Republic (the)",
+          "level": 2,
+          "parent": "western_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SYR.bin"
+        },
+        "YEM": {
+          "id": "YEM",
+          "code": "YEM",
+          "name": "Yemen",
+          "level": 2,
+          "parent": "western_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__YEM.bin"
+        },
         "oceania": {
           "id": "oceania",
           "code": "oceania",
           "name": "Oceania",
           "level": 1,
           "parent": "asia_and_the_pacific",
-          "children": [],
+          "children": [
+            "ASM",
+            "ATF",
+            "AUS",
+            "COK",
+            "FJI",
+            "FSM",
+            "GUM",
+            "HMD",
+            "KIR",
+            "MHL",
+            "MNP",
+            "NCL",
+            "NFK",
+            "NIU",
+            "NRU",
+            "NZL",
+            "PCN",
+            "PLW",
+            "PNG",
+            "PYF",
+            "SLB",
+            "TKL",
+            "TON",
+            "TUV",
+            "UMI",
+            "VUT",
+            "WLF",
+            "WSM",
+            "Clipperton Island",
+            "Hawaii (USA)"
+          ],
           "colour": [
             30,
             54.0,
@@ -4850,13 +6168,479 @@
           "count": 49,
           "bitmask_file": "region__oceania.bin"
         },
+        "ASM": {
+          "id": "ASM",
+          "code": "ASM",
+          "name": "American Samoa",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__ASM.bin"
+        },
+        "ATF": {
+          "id": "ATF",
+          "code": "ATF",
+          "name": "French Southern Territories (the)",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__ATF.bin"
+        },
+        "AUS": {
+          "id": "AUS",
+          "code": "AUS",
+          "name": "Australia",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 31,
+          "bitmask_file": "region__AUS.bin"
+        },
+        "COK": {
+          "id": "COK",
+          "code": "COK",
+          "name": "Cook Islands (the)",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__COK.bin"
+        },
+        "FJI": {
+          "id": "FJI",
+          "code": "FJI",
+          "name": "Fiji",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__FJI.bin"
+        },
+        "FSM": {
+          "id": "FSM",
+          "code": "FSM",
+          "name": "Micronesia (Federated States of)",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__FSM.bin"
+        },
+        "GUM": {
+          "id": "GUM",
+          "code": "GUM",
+          "name": "Guam",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__GUM.bin"
+        },
+        "HMD": {
+          "id": "HMD",
+          "code": "HMD",
+          "name": "Heard Island and McDonald Islands",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__HMD.bin"
+        },
+        "KIR": {
+          "id": "KIR",
+          "code": "KIR",
+          "name": "Kiribati",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__KIR.bin"
+        },
+        "MHL": {
+          "id": "MHL",
+          "code": "MHL",
+          "name": "Marshall Islands (the)",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MHL.bin"
+        },
+        "MNP": {
+          "id": "MNP",
+          "code": "MNP",
+          "name": "Northern Mariana Islands (the)",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MNP.bin"
+        },
+        "NCL": {
+          "id": "NCL",
+          "code": "NCL",
+          "name": "New Caledonia",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__NCL.bin"
+        },
+        "NFK": {
+          "id": "NFK",
+          "code": "NFK",
+          "name": "Norfolk Island",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__NFK.bin"
+        },
+        "NIU": {
+          "id": "NIU",
+          "code": "NIU",
+          "name": "Niue",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__NIU.bin"
+        },
+        "NRU": {
+          "id": "NRU",
+          "code": "NRU",
+          "name": "Nauru",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__NRU.bin"
+        },
+        "NZL": {
+          "id": "NZL",
+          "code": "NZL",
+          "name": "New Zealand",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 13,
+          "bitmask_file": "region__NZL.bin"
+        },
+        "PCN": {
+          "id": "PCN",
+          "code": "PCN",
+          "name": "Pitcairn",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__PCN.bin"
+        },
+        "PLW": {
+          "id": "PLW",
+          "code": "PLW",
+          "name": "Palau",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__PLW.bin"
+        },
+        "PNG": {
+          "id": "PNG",
+          "code": "PNG",
+          "name": "Papua New Guinea",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__PNG.bin"
+        },
+        "PYF": {
+          "id": "PYF",
+          "code": "PYF",
+          "name": "French Polynesia",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__PYF.bin"
+        },
+        "SLB": {
+          "id": "SLB",
+          "code": "SLB",
+          "name": "Solomon Islands",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SLB.bin"
+        },
+        "TKL": {
+          "id": "TKL",
+          "code": "TKL",
+          "name": "Tokelau",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__TKL.bin"
+        },
+        "TON": {
+          "id": "TON",
+          "code": "TON",
+          "name": "Tonga",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__TON.bin"
+        },
+        "TUV": {
+          "id": "TUV",
+          "code": "TUV",
+          "name": "Tuvalu",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__TUV.bin"
+        },
+        "UMI": {
+          "id": "UMI",
+          "code": "UMI",
+          "name": "United States Minor Outlying Islands (the)",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__UMI.bin"
+        },
+        "VUT": {
+          "id": "VUT",
+          "code": "VUT",
+          "name": "Vanuatu",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__VUT.bin"
+        },
+        "WLF": {
+          "id": "WLF",
+          "code": "WLF",
+          "name": "Wallis and Futuna",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__WLF.bin"
+        },
+        "WSM": {
+          "id": "WSM",
+          "code": "WSM",
+          "name": "Samoa",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__WSM.bin"
+        },
+        "Clipperton Island": {
+          "id": "Clipperton Island",
+          "code": "Clipperton Island",
+          "name": "Clipperton Island",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__Clipperton Island.bin"
+        },
+        "Hawaii (USA)": {
+          "id": "Hawaii (USA)",
+          "code": "Hawaii (USA)",
+          "name": "Hawaii (USA)",
+          "level": 2,
+          "parent": "oceania",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__Hawaii (USA).bin"
+        },
         "south_east_asia": {
           "id": "south_east_asia",
           "code": "south_east_asia",
           "name": "South-East Asia",
           "level": 1,
           "parent": "asia_and_the_pacific",
-          "children": [],
+          "children": [
+            "BRN",
+            "CCK",
+            "CXR",
+            "IDN",
+            "KHM",
+            "LAO",
+            "MMR",
+            "MYS",
+            "PHL",
+            "SGP",
+            "THA",
+            "TLS",
+            "VNM",
+            "Paracel Islands",
+            "Spratly Islands"
+          ],
           "colour": [
             30,
             54.0,
@@ -4865,13 +6649,247 @@
           "count": 28,
           "bitmask_file": "region__south_east_asia.bin"
         },
+        "BRN": {
+          "id": "BRN",
+          "code": "BRN",
+          "name": "Brunei Darussalam",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__BRN.bin"
+        },
+        "CCK": {
+          "id": "CCK",
+          "code": "CCK",
+          "name": "Cocos (Keeling) Islands (the)",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__CCK.bin"
+        },
+        "CXR": {
+          "id": "CXR",
+          "code": "CXR",
+          "name": "Christmas Island",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__CXR.bin"
+        },
+        "IDN": {
+          "id": "IDN",
+          "code": "IDN",
+          "name": "Indonesia",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 9,
+          "bitmask_file": "region__IDN.bin"
+        },
+        "KHM": {
+          "id": "KHM",
+          "code": "KHM",
+          "name": "Cambodia",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__KHM.bin"
+        },
+        "LAO": {
+          "id": "LAO",
+          "code": "LAO",
+          "name": "Lao People's Democratic Republic (the)",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 3,
+          "bitmask_file": "region__LAO.bin"
+        },
+        "MMR": {
+          "id": "MMR",
+          "code": "MMR",
+          "name": "Myanmar",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__MMR.bin"
+        },
+        "MYS": {
+          "id": "MYS",
+          "code": "MYS",
+          "name": "Malaysia",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 8,
+          "bitmask_file": "region__MYS.bin"
+        },
+        "PHL": {
+          "id": "PHL",
+          "code": "PHL",
+          "name": "Philippines (the)",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 3,
+          "bitmask_file": "region__PHL.bin"
+        },
+        "SGP": {
+          "id": "SGP",
+          "code": "SGP",
+          "name": "Singapore",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SGP.bin"
+        },
+        "THA": {
+          "id": "THA",
+          "code": "THA",
+          "name": "Thailand",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 3,
+          "bitmask_file": "region__THA.bin"
+        },
+        "TLS": {
+          "id": "TLS",
+          "code": "TLS",
+          "name": "Timor-Leste",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__TLS.bin"
+        },
+        "VNM": {
+          "id": "VNM",
+          "code": "VNM",
+          "name": "Viet Nam",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 5,
+          "bitmask_file": "region__VNM.bin"
+        },
+        "Paracel Islands": {
+          "id": "Paracel Islands",
+          "code": "Paracel Islands",
+          "name": "Paracel Islands",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__Paracel Islands.bin"
+        },
+        "Spratly Islands": {
+          "id": "Spratly Islands",
+          "code": "Spratly Islands",
+          "name": "Spratly Islands",
+          "level": 2,
+          "parent": "south_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__Spratly Islands.bin"
+        },
         "north_east_asia": {
           "id": "north_east_asia",
           "code": "north_east_asia",
           "name": "North-East Asia",
           "level": 1,
           "parent": "asia_and_the_pacific",
-          "children": [],
+          "children": [
+            "CHN",
+            "HKG",
+            "JPN",
+            "KOR",
+            "MAC",
+            "MNG",
+            "PRK",
+            "TWN"
+          ],
           "colour": [
             30,
             54.0,
@@ -4879,6 +6897,126 @@
           ],
           "count": 116,
           "bitmask_file": "region__north_east_asia.bin"
+        },
+        "CHN": {
+          "id": "CHN",
+          "code": "CHN",
+          "name": "China",
+          "level": 2,
+          "parent": "north_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 97,
+          "bitmask_file": "region__CHN.bin"
+        },
+        "HKG": {
+          "id": "HKG",
+          "code": "HKG",
+          "name": "Hong Kong (Special Administrative Region China)",
+          "level": 2,
+          "parent": "north_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__HKG.bin"
+        },
+        "JPN": {
+          "id": "JPN",
+          "code": "JPN",
+          "name": "Japan",
+          "level": 2,
+          "parent": "north_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 6,
+          "bitmask_file": "region__JPN.bin"
+        },
+        "KOR": {
+          "id": "KOR",
+          "code": "KOR",
+          "name": "Korea (the Republic of)",
+          "level": 2,
+          "parent": "north_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 5,
+          "bitmask_file": "region__KOR.bin"
+        },
+        "MAC": {
+          "id": "MAC",
+          "code": "MAC",
+          "name": "Macao (Special Adminstrative Region China",
+          "level": 2,
+          "parent": "north_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MAC.bin"
+        },
+        "MNG": {
+          "id": "MNG",
+          "code": "MNG",
+          "name": "Mongolia",
+          "level": 2,
+          "parent": "north_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__MNG.bin"
+        },
+        "PRK": {
+          "id": "PRK",
+          "code": "PRK",
+          "name": "Korea (the Democratic People's Republic of)",
+          "level": 2,
+          "parent": "north_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__PRK.bin"
+        },
+        "TWN": {
+          "id": "TWN",
+          "code": "TWN",
+          "name": "Taiwan (Province of China)",
+          "level": 2,
+          "parent": "north_east_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 6,
+          "bitmask_file": "region__TWN.bin"
         },
         "africa": {
           "id": "africa",
@@ -4907,7 +7045,19 @@
           "name": "Southern Africa",
           "level": 1,
           "parent": "africa",
-          "children": [],
+          "children": [
+            "AGO",
+            "BWA",
+            "LSO",
+            "MOZ",
+            "MWI",
+            "NAM",
+            "SHN",
+            "SWZ",
+            "ZAF",
+            "ZMB",
+            "ZWE"
+          ],
           "colour": [
             45,
             59.0,
@@ -4916,13 +7066,188 @@
           "count": 16,
           "bitmask_file": "region__southern_africa.bin"
         },
+        "AGO": {
+          "id": "AGO",
+          "code": "AGO",
+          "name": "Angola",
+          "level": 2,
+          "parent": "southern_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__AGO.bin"
+        },
+        "BWA": {
+          "id": "BWA",
+          "code": "BWA",
+          "name": "Botswana",
+          "level": 2,
+          "parent": "southern_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__BWA.bin"
+        },
+        "LSO": {
+          "id": "LSO",
+          "code": "LSO",
+          "name": "Lesotho",
+          "level": 2,
+          "parent": "southern_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__LSO.bin"
+        },
+        "MOZ": {
+          "id": "MOZ",
+          "code": "MOZ",
+          "name": "Mozambique",
+          "level": 2,
+          "parent": "southern_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__MOZ.bin"
+        },
+        "MWI": {
+          "id": "MWI",
+          "code": "MWI",
+          "name": "Malawi",
+          "level": 2,
+          "parent": "southern_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MWI.bin"
+        },
+        "NAM": {
+          "id": "NAM",
+          "code": "NAM",
+          "name": "Namibia",
+          "level": 2,
+          "parent": "southern_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__NAM.bin"
+        },
+        "SHN": {
+          "id": "SHN",
+          "code": "SHN",
+          "name": "Saint Helena, Ascension and Tristan da Cunha",
+          "level": 2,
+          "parent": "southern_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SHN.bin"
+        },
+        "SWZ": {
+          "id": "SWZ",
+          "code": "SWZ",
+          "name": "Eswatini",
+          "level": 2,
+          "parent": "southern_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SWZ.bin"
+        },
+        "ZAF": {
+          "id": "ZAF",
+          "code": "ZAF",
+          "name": "South Africa",
+          "level": 2,
+          "parent": "southern_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 5,
+          "bitmask_file": "region__ZAF.bin"
+        },
+        "ZMB": {
+          "id": "ZMB",
+          "code": "ZMB",
+          "name": "Zambia",
+          "level": 2,
+          "parent": "southern_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__ZMB.bin"
+        },
+        "ZWE": {
+          "id": "ZWE",
+          "code": "ZWE",
+          "name": "Zimbabwe",
+          "level": 2,
+          "parent": "southern_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 4,
+          "bitmask_file": "region__ZWE.bin"
+        },
         "central_africa": {
           "id": "central_africa",
           "code": "central_africa",
           "name": "Central Africa",
           "level": 1,
           "parent": "africa",
-          "children": [],
+          "children": [
+            "BDI",
+            "CAF",
+            "CMR",
+            "COD",
+            "COG",
+            "GAB",
+            "GNQ",
+            "STP",
+            "TCD"
+          ],
           "colour": [
             45,
             59.0,
@@ -4931,13 +7256,164 @@
           "count": 9,
           "bitmask_file": "region__central_africa.bin"
         },
+        "BDI": {
+          "id": "BDI",
+          "code": "BDI",
+          "name": "Burundi",
+          "level": 2,
+          "parent": "central_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__BDI.bin"
+        },
+        "CAF": {
+          "id": "CAF",
+          "code": "CAF",
+          "name": "Central African Republic (the)",
+          "level": 2,
+          "parent": "central_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__CAF.bin"
+        },
+        "CMR": {
+          "id": "CMR",
+          "code": "CMR",
+          "name": "Cameroon",
+          "level": 2,
+          "parent": "central_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 3,
+          "bitmask_file": "region__CMR.bin"
+        },
+        "COD": {
+          "id": "COD",
+          "code": "COD",
+          "name": "Congo (the Democratic Republic of the)",
+          "level": 2,
+          "parent": "central_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__COD.bin"
+        },
+        "COG": {
+          "id": "COG",
+          "code": "COG",
+          "name": "Congo (the)",
+          "level": 2,
+          "parent": "central_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__COG.bin"
+        },
+        "GAB": {
+          "id": "GAB",
+          "code": "GAB",
+          "name": "Gabon",
+          "level": 2,
+          "parent": "central_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__GAB.bin"
+        },
+        "GNQ": {
+          "id": "GNQ",
+          "code": "GNQ",
+          "name": "Equatorial Guinea",
+          "level": 2,
+          "parent": "central_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__GNQ.bin"
+        },
+        "STP": {
+          "id": "STP",
+          "code": "STP",
+          "name": "Sao Tome and Principe",
+          "level": 2,
+          "parent": "central_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__STP.bin"
+        },
+        "TCD": {
+          "id": "TCD",
+          "code": "TCD",
+          "name": "Chad",
+          "level": 2,
+          "parent": "central_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__TCD.bin"
+        },
         "west_africa": {
           "id": "west_africa",
           "code": "west_africa",
           "name": "West Africa",
           "level": 1,
           "parent": "africa",
-          "children": [],
+          "children": [
+            "BEN",
+            "BFA",
+            "CIV",
+            "CPV",
+            "GHA",
+            "GIN",
+            "GMB",
+            "GNB",
+            "LBR",
+            "MLI",
+            "NER",
+            "NGA",
+            "SEN",
+            "SLE",
+            "TGO"
+          ],
           "colour": [
             45,
             59.0,
@@ -4946,13 +7422,254 @@
           "count": 13,
           "bitmask_file": "region__west_africa.bin"
         },
+        "BEN": {
+          "id": "BEN",
+          "code": "BEN",
+          "name": "Benin",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__BEN.bin"
+        },
+        "BFA": {
+          "id": "BFA",
+          "code": "BFA",
+          "name": "Burkina Faso",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__BFA.bin"
+        },
+        "CIV": {
+          "id": "CIV",
+          "code": "CIV",
+          "name": "C\u00f4te d'Ivoire",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 3,
+          "bitmask_file": "region__CIV.bin"
+        },
+        "CPV": {
+          "id": "CPV",
+          "code": "CPV",
+          "name": "Cabo Verde",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__CPV.bin"
+        },
+        "GHA": {
+          "id": "GHA",
+          "code": "GHA",
+          "name": "Ghana",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 4,
+          "bitmask_file": "region__GHA.bin"
+        },
+        "GIN": {
+          "id": "GIN",
+          "code": "GIN",
+          "name": "Guinea",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__GIN.bin"
+        },
+        "GMB": {
+          "id": "GMB",
+          "code": "GMB",
+          "name": "Gambia (the)",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__GMB.bin"
+        },
+        "GNB": {
+          "id": "GNB",
+          "code": "GNB",
+          "name": "Guinea-Bissau",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__GNB.bin"
+        },
+        "LBR": {
+          "id": "LBR",
+          "code": "LBR",
+          "name": "Liberia",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__LBR.bin"
+        },
+        "MLI": {
+          "id": "MLI",
+          "code": "MLI",
+          "name": "Mali",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MLI.bin"
+        },
+        "NER": {
+          "id": "NER",
+          "code": "NER",
+          "name": "Niger (the)",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__NER.bin"
+        },
+        "NGA": {
+          "id": "NGA",
+          "code": "NGA",
+          "name": "Nigeria",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 3,
+          "bitmask_file": "region__NGA.bin"
+        },
+        "SEN": {
+          "id": "SEN",
+          "code": "SEN",
+          "name": "Senegal",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__SEN.bin"
+        },
+        "SLE": {
+          "id": "SLE",
+          "code": "SLE",
+          "name": "Sierra Leone",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SLE.bin"
+        },
+        "TGO": {
+          "id": "TGO",
+          "code": "TGO",
+          "name": "Togo",
+          "level": 2,
+          "parent": "west_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__TGO.bin"
+        },
         "east_africa_and_adjacent_islands": {
           "id": "east_africa_and_adjacent_islands",
           "code": "east_africa_and_adjacent_islands",
           "name": "East Africa and adjacent islands",
           "level": 1,
           "parent": "africa",
-          "children": [],
+          "children": [
+            "COM",
+            "DJI",
+            "ERI",
+            "ETH",
+            "KEN",
+            "MDG",
+            "MUS",
+            "MYT",
+            "REU",
+            "RWA",
+            "SOM",
+            "SSD",
+            "SYC",
+            "TZA",
+            "UGA"
+          ],
           "colour": [
             45,
             59.0,
@@ -4961,13 +7678,247 @@
           "count": 26,
           "bitmask_file": "region__east_africa_and_adjacent_islands.bin"
         },
+        "COM": {
+          "id": "COM",
+          "code": "COM",
+          "name": "Comoros (the)",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__COM.bin"
+        },
+        "DJI": {
+          "id": "DJI",
+          "code": "DJI",
+          "name": "Djibouti",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__DJI.bin"
+        },
+        "ERI": {
+          "id": "ERI",
+          "code": "ERI",
+          "name": "Eritrea",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__ERI.bin"
+        },
+        "ETH": {
+          "id": "ETH",
+          "code": "ETH",
+          "name": "Ethiopia",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 6,
+          "bitmask_file": "region__ETH.bin"
+        },
+        "KEN": {
+          "id": "KEN",
+          "code": "KEN",
+          "name": "Kenya",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 4,
+          "bitmask_file": "region__KEN.bin"
+        },
+        "MDG": {
+          "id": "MDG",
+          "code": "MDG",
+          "name": "Madagascar",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__MDG.bin"
+        },
+        "MUS": {
+          "id": "MUS",
+          "code": "MUS",
+          "name": "Mauritius",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 3,
+          "bitmask_file": "region__MUS.bin"
+        },
+        "MYT": {
+          "id": "MYT",
+          "code": "MYT",
+          "name": "Mayotte",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MYT.bin"
+        },
+        "REU": {
+          "id": "REU",
+          "code": "REU",
+          "name": "R\u00e9union",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__REU.bin"
+        },
+        "RWA": {
+          "id": "RWA",
+          "code": "RWA",
+          "name": "Rwanda",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__RWA.bin"
+        },
+        "SOM": {
+          "id": "SOM",
+          "code": "SOM",
+          "name": "Somalia",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SOM.bin"
+        },
+        "SSD": {
+          "id": "SSD",
+          "code": "SSD",
+          "name": "South Sudan",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SSD.bin"
+        },
+        "SYC": {
+          "id": "SYC",
+          "code": "SYC",
+          "name": "Seychelles",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__SYC.bin"
+        },
+        "TZA": {
+          "id": "TZA",
+          "code": "TZA",
+          "name": "Tanzania, the United Republic of",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 4,
+          "bitmask_file": "region__TZA.bin"
+        },
+        "UGA": {
+          "id": "UGA",
+          "code": "UGA",
+          "name": "Uganda",
+          "level": 2,
+          "parent": "east_africa_and_adjacent_islands",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 3,
+          "bitmask_file": "region__UGA.bin"
+        },
         "north_africa": {
           "id": "north_africa",
           "code": "north_africa",
           "name": "North Africa",
           "level": 1,
           "parent": "africa",
-          "children": [],
+          "children": [
+            "DZA",
+            "EGY",
+            "ESH",
+            "LBY",
+            "MAR",
+            "MRT",
+            "SDN",
+            "TUN"
+          ],
           "colour": [
             45,
             59.0,
@@ -4975,6 +7926,126 @@
           ],
           "count": 8,
           "bitmask_file": "region__north_africa.bin"
+        },
+        "DZA": {
+          "id": "DZA",
+          "code": "DZA",
+          "name": "Algeria",
+          "level": 2,
+          "parent": "north_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 3,
+          "bitmask_file": "region__DZA.bin"
+        },
+        "EGY": {
+          "id": "EGY",
+          "code": "EGY",
+          "name": "Egypt",
+          "level": 2,
+          "parent": "north_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__EGY.bin"
+        },
+        "ESH": {
+          "id": "ESH",
+          "code": "ESH",
+          "name": "Western Sahara*",
+          "level": 2,
+          "parent": "north_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__ESH.bin"
+        },
+        "LBY": {
+          "id": "LBY",
+          "code": "LBY",
+          "name": "Libya",
+          "level": 2,
+          "parent": "north_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__LBY.bin"
+        },
+        "MAR": {
+          "id": "MAR",
+          "code": "MAR",
+          "name": "Morocco",
+          "level": 2,
+          "parent": "north_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MAR.bin"
+        },
+        "MRT": {
+          "id": "MRT",
+          "code": "MRT",
+          "name": "Mauritania",
+          "level": 2,
+          "parent": "north_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MRT.bin"
+        },
+        "SDN": {
+          "id": "SDN",
+          "code": "SDN",
+          "name": "Sudan (the)",
+          "level": 2,
+          "parent": "north_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__SDN.bin"
+        },
+        "TUN": {
+          "id": "TUN",
+          "code": "TUN",
+          "name": "Tunisia",
+          "level": 2,
+          "parent": "north_africa",
+          "children": [],
+          "colour": [
+            45,
+            53.0,
+            61.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__TUN.bin"
         },
         "europe_and_central_asia": {
           "id": "europe_and_central_asia",
@@ -5001,7 +8072,61 @@
           "name": "Central and Western Europe",
           "level": 1,
           "parent": "europe_and_central_asia",
-          "children": [],
+          "children": [
+            "ALA",
+            "ALB",
+            "AND",
+            "AUT",
+            "BEL",
+            "BGR",
+            "BIH",
+            "CHE",
+            "CYP",
+            "CZE",
+            "DEU",
+            "DNK",
+            "ESP",
+            "EST",
+            "FIN",
+            "FRA",
+            "FRO",
+            "GBR",
+            "GGY",
+            "GIB",
+            "GRC",
+            "HRV",
+            "HUN",
+            "IMN",
+            "IRL",
+            "ISL",
+            "ISR",
+            "ITA",
+            "JEY",
+            "LIE",
+            "LTU",
+            "LUX",
+            "LVA",
+            "MCO",
+            "MKD",
+            "MLT",
+            "MNE",
+            "NLD",
+            "NOR",
+            "POL",
+            "PRT",
+            "ROU",
+            "SJM",
+            "SMR",
+            "SRB",
+            "SVK",
+            "SVN",
+            "SWE",
+            "TUR",
+            "VAT",
+            "Akrotiri and Dhekelia",
+            "Kosovo",
+            "Northern Cyprus"
+          ],
           "colour": [
             30,
             54.0,
@@ -5010,13 +8135,816 @@
           "count": 159,
           "bitmask_file": "region__central_and_western_europe.bin"
         },
+        "ALA": {
+          "id": "ALA",
+          "code": "ALA",
+          "name": "\u00c5land Islands",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__ALA.bin"
+        },
+        "ALB": {
+          "id": "ALB",
+          "code": "ALB",
+          "name": "Albania",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__ALB.bin"
+        },
+        "AND": {
+          "id": "AND",
+          "code": "AND",
+          "name": "Andorra",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__AND.bin"
+        },
+        "AUT": {
+          "id": "AUT",
+          "code": "AUT",
+          "name": "Austria",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 4,
+          "bitmask_file": "region__AUT.bin"
+        },
+        "BEL": {
+          "id": "BEL",
+          "code": "BEL",
+          "name": "Belgium",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 4,
+          "bitmask_file": "region__BEL.bin"
+        },
+        "BGR": {
+          "id": "BGR",
+          "code": "BGR",
+          "name": "Bulgaria",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__BGR.bin"
+        },
+        "BIH": {
+          "id": "BIH",
+          "code": "BIH",
+          "name": "Bosnia and Herzegovina",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__BIH.bin"
+        },
+        "CHE": {
+          "id": "CHE",
+          "code": "CHE",
+          "name": "Switzerland",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 3,
+          "bitmask_file": "region__CHE.bin"
+        },
+        "CYP": {
+          "id": "CYP",
+          "code": "CYP",
+          "name": "Cyprus",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__CYP.bin"
+        },
+        "CZE": {
+          "id": "CZE",
+          "code": "CZE",
+          "name": "Czechia",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 4,
+          "bitmask_file": "region__CZE.bin"
+        },
+        "DEU": {
+          "id": "DEU",
+          "code": "DEU",
+          "name": "Germany",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 19,
+          "bitmask_file": "region__DEU.bin"
+        },
+        "DNK": {
+          "id": "DNK",
+          "code": "DNK",
+          "name": "Denmark",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 5,
+          "bitmask_file": "region__DNK.bin"
+        },
+        "ESP": {
+          "id": "ESP",
+          "code": "ESP",
+          "name": "Spain",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 21,
+          "bitmask_file": "region__ESP.bin"
+        },
+        "EST": {
+          "id": "EST",
+          "code": "EST",
+          "name": "Estonia",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__EST.bin"
+        },
+        "FIN": {
+          "id": "FIN",
+          "code": "FIN",
+          "name": "Finland",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 7,
+          "bitmask_file": "region__FIN.bin"
+        },
+        "FRA": {
+          "id": "FRA",
+          "code": "FRA",
+          "name": "France",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 15,
+          "bitmask_file": "region__FRA.bin"
+        },
+        "FRO": {
+          "id": "FRO",
+          "code": "FRO",
+          "name": "Faroe Islands (the)",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__FRO.bin"
+        },
+        "GBR": {
+          "id": "GBR",
+          "code": "GBR",
+          "name": "United Kingdom of Great Britain and Northern Ireland (the)",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 17,
+          "bitmask_file": "region__GBR.bin"
+        },
+        "GGY": {
+          "id": "GGY",
+          "code": "GGY",
+          "name": "Guernsey",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__GGY.bin"
+        },
+        "GIB": {
+          "id": "GIB",
+          "code": "GIB",
+          "name": "Gibraltar",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__GIB.bin"
+        },
+        "GRC": {
+          "id": "GRC",
+          "code": "GRC",
+          "name": "Greece",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 5,
+          "bitmask_file": "region__GRC.bin"
+        },
+        "HRV": {
+          "id": "HRV",
+          "code": "HRV",
+          "name": "Croatia",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__HRV.bin"
+        },
+        "HUN": {
+          "id": "HUN",
+          "code": "HUN",
+          "name": "Hungary",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 8,
+          "bitmask_file": "region__HUN.bin"
+        },
+        "IMN": {
+          "id": "IMN",
+          "code": "IMN",
+          "name": "Isle of Man",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__IMN.bin"
+        },
+        "IRL": {
+          "id": "IRL",
+          "code": "IRL",
+          "name": "Ireland",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 3,
+          "bitmask_file": "region__IRL.bin"
+        },
+        "ISL": {
+          "id": "ISL",
+          "code": "ISL",
+          "name": "Iceland",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__ISL.bin"
+        },
+        "ISR": {
+          "id": "ISR",
+          "code": "ISR",
+          "name": "Israel",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 6,
+          "bitmask_file": "region__ISR.bin"
+        },
+        "ITA": {
+          "id": "ITA",
+          "code": "ITA",
+          "name": "Italy",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 15,
+          "bitmask_file": "region__ITA.bin"
+        },
+        "JEY": {
+          "id": "JEY",
+          "code": "JEY",
+          "name": "Jersey",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__JEY.bin"
+        },
+        "LIE": {
+          "id": "LIE",
+          "code": "LIE",
+          "name": "Liechtenstein",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__LIE.bin"
+        },
+        "LTU": {
+          "id": "LTU",
+          "code": "LTU",
+          "name": "Lithuania",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__LTU.bin"
+        },
+        "LUX": {
+          "id": "LUX",
+          "code": "LUX",
+          "name": "Luxembourg",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__LUX.bin"
+        },
+        "LVA": {
+          "id": "LVA",
+          "code": "LVA",
+          "name": "Latvia",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__LVA.bin"
+        },
+        "MCO": {
+          "id": "MCO",
+          "code": "MCO",
+          "name": "Monaco",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MCO.bin"
+        },
+        "MKD": {
+          "id": "MKD",
+          "code": "MKD",
+          "name": "North Macedonia",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MKD.bin"
+        },
+        "MLT": {
+          "id": "MLT",
+          "code": "MLT",
+          "name": "Malta",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MLT.bin"
+        },
+        "MNE": {
+          "id": "MNE",
+          "code": "MNE",
+          "name": "Montenegro",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MNE.bin"
+        },
+        "NLD": {
+          "id": "NLD",
+          "code": "NLD",
+          "name": "Netherlands (the)",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 3,
+          "bitmask_file": "region__NLD.bin"
+        },
+        "NOR": {
+          "id": "NOR",
+          "code": "NOR",
+          "name": "Norway",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 11,
+          "bitmask_file": "region__NOR.bin"
+        },
+        "POL": {
+          "id": "POL",
+          "code": "POL",
+          "name": "Poland",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 8,
+          "bitmask_file": "region__POL.bin"
+        },
+        "PRT": {
+          "id": "PRT",
+          "code": "PRT",
+          "name": "Portugal",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 8,
+          "bitmask_file": "region__PRT.bin"
+        },
+        "ROU": {
+          "id": "ROU",
+          "code": "ROU",
+          "name": "Romania",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__ROU.bin"
+        },
+        "SJM": {
+          "id": "SJM",
+          "code": "SJM",
+          "name": "Svalbard and Jan Mayen",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SJM.bin"
+        },
+        "SMR": {
+          "id": "SMR",
+          "code": "SMR",
+          "name": "San Marino",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SMR.bin"
+        },
+        "SRB": {
+          "id": "SRB",
+          "code": "SRB",
+          "name": "Serbia",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__SRB.bin"
+        },
+        "SVK": {
+          "id": "SVK",
+          "code": "SVK",
+          "name": "Slovakia",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__SVK.bin"
+        },
+        "SVN": {
+          "id": "SVN",
+          "code": "SVN",
+          "name": "Slovenia",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__SVN.bin"
+        },
+        "SWE": {
+          "id": "SWE",
+          "code": "SWE",
+          "name": "Sweden",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 8,
+          "bitmask_file": "region__SWE.bin"
+        },
+        "TUR": {
+          "id": "TUR",
+          "code": "TUR",
+          "name": "Turkey",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 6,
+          "bitmask_file": "region__TUR.bin"
+        },
+        "VAT": {
+          "id": "VAT",
+          "code": "VAT",
+          "name": "Holy See (the)",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__VAT.bin"
+        },
+        "Akrotiri and Dhekelia": {
+          "id": "Akrotiri and Dhekelia",
+          "code": "Akrotiri and Dhekelia",
+          "name": "Akrotiri and Dhekelia",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__Akrotiri and Dhekelia.bin"
+        },
+        "Kosovo": {
+          "id": "Kosovo",
+          "code": "Kosovo",
+          "name": "Kosovo",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__Kosovo.bin"
+        },
+        "Northern Cyprus": {
+          "id": "Northern Cyprus",
+          "code": "Northern Cyprus",
+          "name": "Northern Cyprus",
+          "level": 2,
+          "parent": "central_and_western_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__Northern Cyprus.bin"
+        },
         "eastern_europe": {
           "id": "eastern_europe",
           "code": "eastern_europe",
           "name": "Eastern Europe",
           "level": 1,
           "parent": "europe_and_central_asia",
-          "children": [],
+          "children": [
+            "ARM",
+            "AZE",
+            "BLR",
+            "GEO",
+            "MDA",
+            "RUS",
+            "UKR"
+          ],
           "colour": [
             30,
             54.0,
@@ -5025,13 +8953,124 @@
           "count": 31,
           "bitmask_file": "region__eastern_europe.bin"
         },
+        "ARM": {
+          "id": "ARM",
+          "code": "ARM",
+          "name": "Armenia",
+          "level": 2,
+          "parent": "eastern_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__ARM.bin"
+        },
+        "AZE": {
+          "id": "AZE",
+          "code": "AZE",
+          "name": "Azerbaijan",
+          "level": 2,
+          "parent": "eastern_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__AZE.bin"
+        },
+        "BLR": {
+          "id": "BLR",
+          "code": "BLR",
+          "name": "Belarus",
+          "level": 2,
+          "parent": "eastern_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__BLR.bin"
+        },
+        "GEO": {
+          "id": "GEO",
+          "code": "GEO",
+          "name": "Georgia",
+          "level": 2,
+          "parent": "eastern_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__GEO.bin"
+        },
+        "MDA": {
+          "id": "MDA",
+          "code": "MDA",
+          "name": "Moldova (the Republic of)",
+          "level": 2,
+          "parent": "eastern_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__MDA.bin"
+        },
+        "RUS": {
+          "id": "RUS",
+          "code": "RUS",
+          "name": "Russian Federation (the)",
+          "level": 2,
+          "parent": "eastern_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 15,
+          "bitmask_file": "region__RUS.bin"
+        },
+        "UKR": {
+          "id": "UKR",
+          "code": "UKR",
+          "name": "Ukraine",
+          "level": 2,
+          "parent": "eastern_europe",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 4,
+          "bitmask_file": "region__UKR.bin"
+        },
         "central_asia": {
           "id": "central_asia",
           "code": "central_asia",
           "name": "Central Asia",
           "level": 1,
           "parent": "europe_and_central_asia",
-          "children": [],
+          "children": [
+            "KAZ",
+            "KGZ",
+            "TJK",
+            "TKM",
+            "UZB"
+          ],
           "colour": [
             30,
             54.0,
@@ -5040,11 +9079,103 @@
           "count": 11,
           "bitmask_file": "region__central_asia.bin"
         },
+        "KAZ": {
+          "id": "KAZ",
+          "code": "KAZ",
+          "name": "Kazakhstan",
+          "level": 2,
+          "parent": "central_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__KAZ.bin"
+        },
+        "KGZ": {
+          "id": "KGZ",
+          "code": "KGZ",
+          "name": "Kyrgyzstan",
+          "level": 2,
+          "parent": "central_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__KGZ.bin"
+        },
+        "TJK": {
+          "id": "TJK",
+          "code": "TJK",
+          "name": "Tajikistan",
+          "level": 2,
+          "parent": "central_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__TJK.bin"
+        },
+        "TKM": {
+          "id": "TKM",
+          "code": "TKM",
+          "name": "Turkmenistan",
+          "level": 2,
+          "parent": "central_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 1,
+          "bitmask_file": "region__TKM.bin"
+        },
+        "UZB": {
+          "id": "UZB",
+          "code": "UZB",
+          "name": "Uzbekistan",
+          "level": 2,
+          "parent": "central_asia",
+          "children": [],
+          "colour": [
+            30,
+            48.0,
+            64.0
+          ],
+          "count": 2,
+          "bitmask_file": "region__UZB.bin"
+        },
         "antarctica": {
           "id": "antarctica",
           "code": "antarctica",
           "name": "Antarctica",
           "level": 1,
+          "parent": "antarctica",
+          "children": [
+            "ATA"
+          ],
+          "colour": [
+            30,
+            20.0,
+            88.0
+          ],
+          "count": 0,
+          "bitmask_file": "region__antarctica.bin"
+        },
+        "ATA": {
+          "id": "ATA",
+          "code": "ATA",
+          "name": "Antarctica",
+          "level": 2,
           "parent": "antarctica",
           "children": [],
           "colour": [
@@ -5053,7 +9184,7 @@
             88.0
           ],
           "count": 0,
-          "bitmask_file": "region__antarctica.bin"
+          "bitmask_file": "region__ATA.bin"
         },
         "global": {
           "id": "global",

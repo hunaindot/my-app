@@ -23,6 +23,56 @@ export default function Scatterplot({ arrowData, filteredMask, bitmasks, info, s
   const [yDomain, setYDomain] = useState(null)
   const [panMode, setPanMode] = useState(false)  // false = select, true = pan
 
+  // ── Full data extent (for zoom-level calculation) ─────────────────────────
+  const dataExtent = useMemo(() => {
+    if (!arrowData) return null
+    let xMin = Infinity, xMax = -Infinity, yMin = Infinity, yMax = -Infinity
+    for (let i = 0; i < arrowData.length; i++) {
+      const x = arrowData.umap_x[i], y = arrowData.umap_y[i]
+      if (x < xMin) xMin = x
+      if (x > xMax) xMax = x
+      if (y < yMin) yMin = y
+      if (y > yMax) yMax = y
+    }
+    return { xMin, xMax, yMin, yMax, xSpan: xMax - xMin, ySpan: yMax - yMin }
+  }, [arrowData])
+
+  // ── Label centroids (mean UMAP position of each label's papers) ───────────
+  const labelCentroids = useMemo(() => {
+    if (!arrowData || !bitmasks || !info) return []
+    const n = arrowData.length
+    const result = []
+    for (const groupKey of ['drivers', 'threats']) {
+      const group = info.groups[groupKey]
+      if (!group) continue
+      const masksForGroup = bitmasks[groupKey] || {}
+      for (const label of Object.values(group.labels)) {
+        const mask = masksForGroup[label.id]
+        if (!mask || label.count < 10) continue
+        let sumX = 0, sumY = 0, count = 0
+        for (let i = 0; i < n; i++) {
+          if (mask[i >> 3] & (1 << (i & 7))) {
+            sumX += arrowData.umap_x[i]
+            sumY += arrowData.umap_y[i]
+            count++
+          }
+        }
+        if (count === 0) continue
+        const [h, s, l] = label.colour
+        result.push({
+          x: sumX / count,
+          y: sumY / count,
+          text: label.name,
+          group: groupKey,
+          level: label.level ?? 0,
+          // Darken the hue-colour for text legibility
+          fill: `hsl(${h},${s}%,${Math.max(l - 20, 10)}%)`,
+        })
+      }
+    }
+    return result
+  }, [arrowData, bitmasks, info])
+
   // ── Per-record driver colour ───────────────────────────────────────────────
   const driverColors = useMemo(() => {
     if (!arrowData || !bitmasks || !info) return null
@@ -80,6 +130,47 @@ export default function Scatterplot({ arrowData, filteredMask, bitmasks, info, s
       marks.push(Plot.dot(sel, { x: 'x', y: 'y', r: 4, fill: d => d.fill, fillOpacity: 1, stroke: 'white', strokeWidth: 1 }))
     }
 
+    // ── Label overlays ─────────────────────────────────────────────────────
+    if (labelCentroids.length > 0 && dataExtent) {
+      const curXSpan = xDomain ? xDomain[1] - xDomain[0] : dataExtent.xSpan
+      const zoomLevel = dataExtent.xSpan / curXSpan   // 1 = full view, 2 = 2× zoom …
+
+      const curXMin = xDomain ? xDomain[0] : dataExtent.xMin
+      const curXMax = xDomain ? xDomain[1] : dataExtent.xMax
+      const curYMin = yDomain ? yDomain[0] : dataExtent.yMin
+      const curYMax = yDomain ? yDomain[1] : dataExtent.yMax
+
+      // Which labels are in the current viewport and at the right zoom level?
+      const visible = labelCentroids.filter(c => {
+        if (c.x < curXMin || c.x > curXMax || c.y < curYMin || c.y > curYMax) return false
+        if (c.group === 'drivers') return true           // always
+        if (c.level === 0)         return zoomLevel >= 1.3
+        if (c.level === 1)         return zoomLevel >= 2.5
+        return                            zoomLevel >= 4
+      })
+
+      const driverLabels = visible.filter(c => c.group === 'drivers')
+      const threatLabels  = visible.filter(c => c.group === 'threats')
+
+      const dOpacity = Math.min(1, 0.35 + (zoomLevel - 1) * 0.45)
+      const tOpacity = Math.min(1, Math.max(0, (zoomLevel - 1.3) * 0.65))
+      const dSize    = Math.min(13, 9 + zoomLevel)
+      const tSize    = Math.min(11, 7 + zoomLevel * 0.8)
+
+      const textOpts = (opacity, size, bold) => ({
+        x: 'x', y: 'y', text: 'text',
+        fontSize: size, fontWeight: bold ? 'bold' : '500',
+        stroke: 'white', strokeWidth: 3, strokeOpacity: opacity * 0.85,
+        fill: d => d.fill, fillOpacity: opacity,
+        textAnchor: 'middle', lineAnchor: 'middle',
+      })
+
+      if (driverLabels.length > 0)
+        marks.push(Plot.text(driverLabels, textOpts(dOpacity, dSize, true)))
+      if (threatLabels.length > 0)
+        marks.push(Plot.text(threatLabels, textOpts(tOpacity, tSize, c => c.level === 0)))
+    }
+
     const plot = Plot.plot({
       width: w, height: h, margin: 10,
       x: { axis: null, ...(xDomain ? { domain: xDomain } : {}) },
@@ -91,7 +182,7 @@ export default function Scatterplot({ arrowData, filteredMask, bitmasks, info, s
     containerRef.current.innerHTML = ''
     containerRef.current.appendChild(plot)
     return () => plot.remove?.()
-  }, [arrowData, filteredMask, driverColors, selection, xDomain, yDomain])
+  }, [arrowData, filteredMask, driverColors, selection, xDomain, yDomain, labelCentroids, dataExtent])
 
   // ── Zoom / pan helpers (via ref so wheel listener closure is always fresh) ─
   const zoomFn = useRef(null)
