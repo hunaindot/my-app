@@ -33,7 +33,8 @@ with pg_conn.cursor() as cur:
     cur.execute("DROP TABLE IF EXISTS documents")
     cur.execute("""
         CREATE TABLE documents (
-            id           TEXT PRIMARY KEY,
+            idx          INTEGER PRIMARY KEY,
+            id           TEXT,
             title        TEXT,
             abstract     TEXT,
             year         SMALLINT,
@@ -66,17 +67,17 @@ with pg_conn.cursor() as cur:
             cur,
             """
             INSERT INTO documents (
-                id, title, abstract, year, doi, authors,
+                idx, id, title, abstract, year, doi, authors,
                 drivers, threat_l0, threat_l1,
                 realm, biome, study_design,
                 kingdom, region, direction
             ) VALUES (
-                %(id)s, %(title)s, %(abstract)s, %(year)s, %(doi)s, %(authors)s,
+                %(idx)s, %(id)s, %(title)s, %(abstract)s, %(year)s, %(doi)s, %(authors)s,
                 %(drivers)s, %(threat_l0)s, %(threat_l1)s,
                 %(realm)s, %(biome)s, %(study_design)s,
                 %(kingdom)s, %(region)s, %(direction)s
             )
-            ON CONFLICT (id) DO NOTHING
+            ON CONFLICT (idx) DO NOTHING
             """,
             batch,
         )

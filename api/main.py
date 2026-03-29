@@ -80,13 +80,13 @@ def get_documents(req: DocumentsRequest):
             cur.execute(
                 """
                 SELECT
-                    id, title, abstract, year, doi, authors,
+                    idx, id, title, abstract, year, doi, authors,
                     drivers, threat_l0, threat_l1,
                     realm, biome, study_design,
                     kingdom, region, direction
                 FROM documents
-                WHERE id = ANY(%s)
-                ORDER BY id
+                WHERE idx = ANY(%s)
+                ORDER BY idx
                 """,
                 (req.ids,),
             )

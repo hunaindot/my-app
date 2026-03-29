@@ -42,6 +42,30 @@ DRIVER_SYNONYMS = {
     "invasive_non_native_alien_species_diseases_": "invasive_alien_species",
 }
 
+# Palette anchors (H, S, L)
+DRIVER_PALETTE = {
+    # Colorblind-friendly, high-contrast anchors (okabe-ito inspired, mapped to HSL)
+    "land_sea_use_change":      [112, 58, 42],  # forest green
+    "direct_exploitation":      [23,  70, 44],  # deep orange
+    "climate_change":           [198, 68, 46],  # sky/blue-cyan for separation
+    "pollution":                [252, 33, 50],  # purple
+    "invasive_alien_species":   [329, 72, 48],  # magenta
+}
+
+THREAT_BASE_COLOURS = {
+    "1":  [25,  60, 50],  # Residential & commercial
+    "2":  [55,  60, 50],  # Agriculture & aquaculture
+    "3":  [35,  65, 45],  # Energy & mining
+    "4":  [205, 55, 50],  # Transportation
+    "5":  [10,  60, 50],  # Biological resource use
+    "6":  [355, 55, 50],  # Human intrusions
+    "7":  [145, 45, 45],  # Natural system modifications
+    "8":  [95,  55, 45],  # Invasive/problematic
+    "9":  [280, 55, 50],  # Pollution
+    "10": [210, 40, 55],  # Geological events
+    "11": [200, 55, 55],  # Climate change & severe weather
+}
+
 REGION_SYNONYMS = {
     "asia_and_the_pacific": "asia_pacific",
     "asia_and_pacific": "asia_pacific",
@@ -187,18 +211,19 @@ def ensure_dir(path: Path):
 
 
 # ── Build label trees ──────────────────────────────────────────────────────
-def build_flat_group(old_info, group_key, col_name, values: List[str], synonyms_map: Dict[str, List[str]] | None = None) -> Dict:
+def build_flat_group(old_info, group_key, col_name, values: List[str], synonyms_map: Dict[str, List[str]] | None = None, palette: Dict[str, List[float]] | None = None) -> Dict:
     grp = old_info["groups"].get(group_key, {})
     labels_out: Dict[str, Label] = {}
     for idx, value in enumerate(values):
         old_lbl = grp.get("labels", {}).get(f"{group_key}|{idx}", {})
         extra_tokens = synonyms_map.get(value, []) if synonyms_map else []
+        colour = palette.get(value) if palette else old_lbl.get("colour")
         labels_out[value] = Label(
             id=value,
             name=old_lbl.get("name", value.replace("_", " ").title()),
             level=0,
             parent=None,
-            colour=old_lbl.get("colour", [30, 50, 50]),
+            colour=colour or old_lbl.get("colour", [30, 50, 50]),
             code=value,
             dataset_tokens=[value, normalise_token(value), *extra_tokens],
         )
@@ -212,7 +237,7 @@ def build_flat_group(old_info, group_key, col_name, values: List[str], synonyms_
 
 def build_threats(old_info) -> Dict:
     data = json.loads(THREATS_PATH.read_text())
-    base_colours = load_base_colours(old_info, "threats")
+    base_colours = {**load_base_colours(old_info, "threats"), **THREAT_BASE_COLOURS}
 
     labels: Dict[str, Label] = {}
 
@@ -520,6 +545,7 @@ def main():
                 "invasive_alien_species",
             ],
             "synonyms": driver_syn_tokens,
+            "palette": DRIVER_PALETTE,
         },
         "study_design": {
             "col": COLUMNS["study_design"],
@@ -543,7 +569,7 @@ def main():
     byte_len = math.ceil(n / 8)
 
     for gkey, spec in flat_specs.items():
-        grp = build_flat_group(old_info, gkey, spec["col"], spec["values"], spec.get("synonyms"))
+        grp = build_flat_group(old_info, gkey, spec["col"], spec["values"], spec.get("synonyms"), spec.get("palette"))
         labels = grp.pop("labels")
         # masks for flat groups
         masks = {}

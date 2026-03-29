@@ -20,7 +20,8 @@ DB_OUT  = ROOT / "api" / "documents.sqlite"
 
 # Columns to include in SQLite (mapped from sample_merged schema)
 COLUMNS = {
-    "id": None,  # generated sequentially
+    "idx": None,               # numeric row index (matches slim.arrow id / bitmask index)
+    "id": "custom_id",        # WOS-style id (falls back to UT if missing)
     "title": "Article Title",
     "abstract": "Abstract",
     "year": "Publication Year",
@@ -47,7 +48,8 @@ def main():
     print(f"  {n:,} records, {len(src.columns)} columns")
 
     out = pd.DataFrame()
-    out["id"] = src.get("custom_id", src.get("UT (Unique WOS ID)", pd.Series(range(n)))).astype(str)
+    out["idx"] = pd.Series(range(n), dtype="int32")
+    out["id"] = src.get("custom_id", src.get("UT (Unique WOS ID)", pd.Series(range(n)))).fillna("").astype(str)
     out["title"] = src[COLUMNS["title"]].fillna("").astype(str)
     out["abstract"] = src[COLUMNS["abstract"]].fillna("").astype(str)
     out["year"] = src[COLUMNS["year"]].astype("int16")

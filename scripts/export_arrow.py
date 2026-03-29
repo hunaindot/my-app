@@ -1,37 +1,53 @@
 """
 scripts/export_arrow.py
 
-Writes slim.arrow — the lightweight columnar file loaded by the browser.
-Contains only the fields needed for the scatterplot + result ordering.
-Does NOT contain abstracts (those stay in SQLite).
-
-Run after compute_umap.py.
+Computes embeddings + UMAP (2D) directly from the source parquet and writes
+slim.arrow for the frontend. Requires sentence-transformers + umap-learn.
 """
-from math import ceil, sqrt
+import glob
 from pathlib import Path
+
+import numpy as np
 import pandas as pd
 import pyarrow as pa
 import pyarrow.ipc as ipc
+from sentence_transformers import SentenceTransformer
+from umap import UMAP
 
 ROOT = Path(__file__).parent.parent
-DATA_IN  = ROOT / "data" / "sample_merged.parquet"
+PARQ_CANDIDATES = sorted(glob.glob(str(ROOT / "data" / "*.parq*")))
+if not PARQ_CANDIDATES:
+    raise FileNotFoundError("No parquet found in data/*.parq*")
+DATA_IN  = Path(PARQ_CANDIDATES[0])
 DATA_OUT = ROOT / "frontend" / "public" / "data" / "slim.arrow"
 
 
 def main():
     print(f"Reading {DATA_IN}")
-    src = pd.read_parquet(DATA_IN, columns=["Publication Year", "Article Title"])
+    src = pd.read_parquet(DATA_IN)
 
     n = len(src)
-    grid_w = ceil(sqrt(max(n, 1)))
     ids = pd.Series(range(n), name="id", dtype="int32")
-    wos_id = src.get("custom_id") if "custom_id" in src.columns else src.get("UT (Unique WOS ID)")
-    if wos_id is not None:
-        wos_id = wos_id.fillna("").astype(str).rename("wos_id")
-    years = src["Publication Year"].astype("int16", copy=False).rename("year")
-    titles = src["Article Title"].fillna("").astype(str).str[:120].rename("title")
-    umap_x = pd.Series([i % grid_w for i in range(n)], name="umap_x", dtype="float32")
-    umap_y = pd.Series([i // grid_w for i in range(n)], name="umap_y", dtype="float32")
+    years = src.get("Publication Year", pd.Series([0]*n)).astype("int16", copy=False).rename("year")
+    titles = src.get("Article Title", pd.Series([""]*n)).fillna("").astype(str).str[:200].rename("title")
+    abstracts = src.get("Abstract", pd.Series([""]*n)).fillna("").astype(str)
+
+    wos_id = None
+    if "custom_id" in src.columns:
+        wos_id = src["custom_id"].fillna("").astype(str).rename("wos_id")
+    elif "UT (Unique WOS ID)" in src.columns:
+        wos_id = src["UT (Unique WOS ID)"].fillna("").astype(str).rename("wos_id")
+
+    # Embed titles + abstracts
+    texts = (titles + " " + abstracts).tolist()
+    model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+    embeddings = model.encode(texts, batch_size=256, show_progress_bar=True, normalize_embeddings=True)
+
+    # UMAP to 2D
+    reducer = UMAP(n_components=2, n_neighbors=15, min_dist=0.1, metric="cosine", random_state=42)
+    coords = reducer.fit_transform(embeddings).astype("float32")
+    umap_x = pd.Series(coords[:, 0], name="umap_x")
+    umap_y = pd.Series(coords[:, 1], name="umap_y")
 
     parts = [ids, years, umap_x, umap_y, titles]
     if wos_id is not None:
