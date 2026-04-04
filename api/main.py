@@ -19,6 +19,7 @@ load_dotenv()
 import psycopg2
 import psycopg2.extras
 from fastapi import FastAPI, HTTPException
+from chat import router as chat_router   # chat/ package
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -33,10 +34,12 @@ ALLOWED_ORIGINS = os.getenv(
 
 # ── App ─────────────────────────────────────────────────────────────────────
 app = FastAPI(title="Biodiversity Map API", docs_url="/docs")
+app.include_router(chat_router, prefix="/api")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
+    allow_origin_regex=r"http://localhost(:\d+)?",
     allow_methods=["GET", "POST"],
     allow_headers=["Content-Type"],
 )

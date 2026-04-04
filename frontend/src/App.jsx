@@ -7,6 +7,7 @@ import ThreatsView from './components/ThreatsView'
 import MatrixView from './components/MatrixView'
 import ResultsList from './components/ResultsList'
 import InfoTab from './components/InfoTab'
+import ChatTab from './components/ChatTab'
 import { loadArrow } from './utils/arrow'
 import { loadAllBitmasks, computeFilterMask, computeYearMask, combineMasks, countBits, toggleLabel } from './utils/bitmask'
 
@@ -108,9 +109,15 @@ export default function App() {
         </button>
         <button
           onClick={() => setTab('info')}
-          className={`px-3 py-1 rounded text-xs font-medium ${tab === 'info' ? 'bg-white text-amber-800' : 'text-white hover:bg-amber-600'}`}
+          className={`mr-3 px-3 py-1 rounded text-xs font-medium ${tab === 'info' ? 'bg-white text-amber-800' : 'text-white hover:bg-amber-600'}`}
         >
           Info
+        </button>
+        <button
+          onClick={() => setTab('chat')}
+          className={`px-3 py-1 rounded text-xs font-medium ${tab === 'chat' ? 'bg-white text-amber-800' : 'text-white hover:bg-amber-600'}`}
+        >
+          Chat
         </button>
         <button
           onClick={() => downloadCSV(arrowData, filteredMask, bitmasks, info)}
@@ -123,6 +130,20 @@ export default function App() {
 
       {tab === 'info' ? (
         <InfoTab />
+      ) : tab === 'chat' ? (
+        <div className="flex-1 overflow-hidden">
+          <ChatTab
+            info={info}
+            activeFilters={activeFilters}
+            totalVisible={totalVisible}
+            arrowData={arrowData}
+            bitmasks={bitmasks}
+            filteredMask={filteredMask}
+            yearRange={yearRange}
+            onSetGroup={setGroupFilters}
+            onClear={clearFilters}
+          />
+        </div>
       ) : (
         <div className="flex flex-1 overflow-hidden">
           {filtersOpen && (
