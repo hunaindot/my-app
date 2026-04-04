@@ -57,6 +57,10 @@ export async function sendChatMessage(message, history, context, relevantDocIds 
       relevant_doc_ids: relevantDocIds,
     }),
   })
-  if (!res.ok) throw new Error(`Chat API error ${res.status}`)
+  if (!res.ok) {
+    let detail = `Chat API error ${res.status}`
+    try { const body = await res.json(); detail += `: ${body.detail ?? JSON.stringify(body)}` } catch {}
+    throw new Error(detail)
+  }
   return await res.json()
 }

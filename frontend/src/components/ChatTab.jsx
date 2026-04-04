@@ -175,10 +175,10 @@ export default function ChatTab({
         ...prev,
         { role: 'assistant', content: reply, ts: Date.now(), usage, contextDocs: context_docs },
       ])
-    } catch {
+    } catch (err) {
       setMessages(prev => [
         ...prev,
-        { role: 'assistant', content: '(Agent unavailable)', ts: Date.now(), isEcho: true },
+        { role: 'assistant', content: `(Agent unavailable: ${err.message})`, ts: Date.now(), isEcho: true },
       ])
     } finally {
       setThinking(false)
