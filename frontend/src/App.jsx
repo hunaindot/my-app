@@ -15,7 +15,7 @@ const MIN_PANEL = 160
 const MAX_PANEL = 560
 
 // Set VITE_CHAT_ENABLED=false in .env.local to hide the Chat tab
-const CHAT_ENABLED = import.meta.env.VITE_CHAT_ENABLED !== 'false'
+const CHAT_ENABLED = import.meta.env.VITE_CHAT_ENABLED === 'true'
 
 export default function App() {
   const [tab, setTab] = useState('explorer')
