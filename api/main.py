@@ -28,6 +28,7 @@ from chat import router as chat_router   # chat/ package
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
+
 # ── Config ─────────────────────────────────────────────────────────────────
 DATABASE_URL = os.getenv("DATABASE_URL")  # set in Render env vars
 INFO_PATH = Path(os.getenv("INFO_PATH", str(Path(__file__).parent / "info.json")))
