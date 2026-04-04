@@ -14,6 +14,9 @@ import { loadAllBitmasks, computeFilterMask, computeYearMask, combineMasks, coun
 const MIN_PANEL = 160
 const MAX_PANEL = 560
 
+// Set VITE_CHAT_ENABLED=false in .env.local to hide the Chat tab
+const CHAT_ENABLED = import.meta.env.VITE_CHAT_ENABLED !== 'false'
+
 export default function App() {
   const [tab, setTab] = useState('explorer')
   const [info, setInfo] = useState(null)
@@ -113,12 +116,14 @@ export default function App() {
         >
           Info
         </button>
-        <button
-          onClick={() => setTab('chat')}
-          className={`px-3 py-1 rounded text-xs font-medium ${tab === 'chat' ? 'bg-white text-amber-800' : 'text-white hover:bg-amber-600'}`}
-        >
-          Chat
-        </button>
+        {CHAT_ENABLED && (
+          <button
+            onClick={() => setTab('chat')}
+            className={`px-3 py-1 rounded text-xs font-medium ${tab === 'chat' ? 'bg-white text-amber-800' : 'text-white hover:bg-amber-600'}`}
+          >
+            Chat
+          </button>
+        )}
         <button
           onClick={() => downloadCSV(arrowData, filteredMask, bitmasks, info)}
           disabled={!arrowData}
@@ -130,7 +135,7 @@ export default function App() {
 
       {tab === 'info' ? (
         <InfoTab />
-      ) : tab === 'chat' ? (
+      ) : tab === 'chat' && CHAT_ENABLED ? (
         <div className="flex-1 overflow-hidden">
           <ChatTab
             info={info}
