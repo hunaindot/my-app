@@ -16,7 +16,11 @@ from typing import List
 
 # Ensure the api/ directory is on sys.path so `chat` package is importable
 # regardless of how uvicorn is invoked by the host (e.g. Render).
-sys.path.insert(0, str(Path(__file__).parent))
+_here = str(Path(__file__).resolve().parent)
+sys.path.insert(0, _here)
+print(f"[startup] __file__={__file__!r}  _here={_here!r}")
+print(f"[startup] dir listing: {os.listdir(_here)}")
+print(f"[startup] sys.path[:4]: {sys.path[:4]}")
 
 from dotenv import load_dotenv
 load_dotenv()
