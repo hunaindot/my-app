@@ -9,9 +9,14 @@ All filtering is client-side (bitmasks). This API only serves full document
 records on demand (abstracts, full label lists, DOI, authors).
 """
 import os
+import sys
 import json
 from pathlib import Path
 from typing import List
+
+# Ensure the api/ directory is on sys.path so `chat` package is importable
+# regardless of how uvicorn is invoked by the host (e.g. Render).
+sys.path.insert(0, str(Path(__file__).parent))
 
 from dotenv import load_dotenv
 load_dotenv()
