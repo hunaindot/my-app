@@ -1,10 +1,12 @@
 import { useState, useEffect, useCallback } from 'react'
 import FilterPanel from './components/FilterPanel'
+import QueryChipBar from './components/QueryChipBar'
 import Scatterplot from './components/Scatterplot'
 import TableView from './components/TableView'
 import GetView from './components/GetView'
 import ThreatsView from './components/ThreatsView'
 import MatrixView from './components/MatrixView'
+import TrendsView from './components/TrendsView'
 import ResultsList from './components/ResultsList'
 import InfoTab from './components/InfoTab'
 import ChatTab from './components/ChatTab'
@@ -41,7 +43,7 @@ export default function App() {
       const infoRes = await fetch('./data/info.json')
       const infoData = await infoRes.json()
       setInfo(infoData)
-      setYearRange([infoData.start_year, infoData.end_year])
+      setYearRange([infoData.start_year, infoData.end_year - 1])
       const arrow = await loadArrow('./data/slim.arrow')
       setArrowData(arrow)
       const masks = await loadAllBitmasks(infoData, './data/bitmasks/')
@@ -88,7 +90,7 @@ export default function App() {
 
   function clearFilters() {
     setActiveFilters({})
-    if (info) setYearRange([info.start_year, info.end_year])
+    if (info) setYearRange([info.start_year, info.end_year - 1])
     setScatterSelection(null)
   }
 
@@ -102,35 +104,53 @@ export default function App() {
 
   return (
     <div className="flex flex-col h-screen font-sans text-sm bg-white">
-      <header className="flex items-center px-4 py-2 border-b border-gray-200 bg-amber-700 text-white">
-        <span className="font-semibold text-base mr-4">Biodiversity Loss - Systematic Map</span>
-        <button
-          onClick={() => setTab('explorer')}
-          className={`mr-3 px-3 py-1 rounded text-xs font-medium ${tab === 'explorer' ? 'bg-white text-amber-800' : 'text-white hover:bg-amber-600'}`}
-        >
-          Explorer
-        </button>
-        <button
-          onClick={() => setTab('info')}
-          className={`mr-3 px-3 py-1 rounded text-xs font-medium ${tab === 'info' ? 'bg-white text-amber-800' : 'text-white hover:bg-amber-600'}`}
-        >
-          Info
-        </button>
-        {CHAT_ENABLED && (
+      {/* Top bar */}
+      <header className="flex items-center px-4 py-2 border-b border-gray-200 bg-white gap-4">
+        {/* Logo + title */}
+        <div className="flex items-center gap-2.5 flex-shrink-0">
+          <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#2d5238' }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10"/>
+              <path d="M12 2c2.5 4 4 8 4 10"/>
+              <path d="M12 2C9.5 6 8 10 8 12"/>
+              <path d="M2 12h20"/>
+            </svg>
+          </div>
+          <div>
+            <div className="font-bold text-sm text-gray-900 leading-tight">Systematic Map</div>
+            <div className="text-[10px] text-gray-400 leading-tight">Biodiversity loss literature · LMU Munich</div>
+          </div>
+        </div>
+
+        {/* Nav tabs */}
+        <nav className="flex items-center gap-0.5 ml-2">
+          {[['explorer','Explorer'],['info','Info'],CHAT_ENABLED ? ['chat','Chat'] : null].filter(Boolean).map(([id, label]) => (
+            <button
+              key={id}
+              onClick={() => setTab(id)}
+              className={`px-3 py-1.5 rounded text-xs font-medium transition-colors
+                ${tab === id ? 'bg-[#2d5238] text-white' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-100'}`}
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+
+        {/* Right side: doc count + download */}
+        <div className="ml-auto flex items-center gap-3">
+          <span className="text-xs text-gray-500">
+            <span className="font-semibold text-gray-800">{totalVisible.toLocaleString()}</span>
+            {' / '}
+            {(arrowData?.length ?? info?.total ?? 0).toLocaleString()} documents
+          </span>
           <button
-            onClick={() => setTab('chat')}
-            className={`px-3 py-1 rounded text-xs font-medium ${tab === 'chat' ? 'bg-white text-amber-800' : 'text-white hover:bg-amber-600'}`}
+            onClick={() => downloadCSV(arrowData, filteredMask, bitmasks, info)}
+            disabled={!arrowData}
+            className="text-xs border border-gray-200 rounded px-2.5 py-1 text-gray-600 hover:bg-gray-50 disabled:opacity-40 flex items-center gap-1"
           >
-            Chat
+            <span>↓</span> CSV
           </button>
-        )}
-        <button
-          onClick={() => downloadCSV(arrowData, filteredMask, bitmasks, info)}
-          disabled={!arrowData}
-          className="ml-auto text-xs text-white hover:underline disabled:opacity-40"
-        >
-          ↓ Download CSV
-        </button>
+        </div>
       </header>
 
       {tab === 'info' ? (
@@ -154,7 +174,7 @@ export default function App() {
           {filtersOpen && (
             <>
               <aside
-                style={{ width: filterWidth, minWidth: MIN_PANEL, maxWidth: MAX_PANEL }}
+                style={{ width: filterWidth, minWidth: MIN_PANEL, maxWidth: MAX_PANEL, backgroundColor: '#f7f6f0' }}
                 className="flex-shrink-0 overflow-y-auto border-r border-gray-200 p-3"
               >
                 <FilterPanel
@@ -187,6 +207,7 @@ export default function App() {
               <ViewTab label="Ecosystems" active={viewMode === 'get'}      onClick={() => setViewMode('get')} />
               <ViewTab label="Threats"    active={viewMode === 'threats'}  onClick={() => setViewMode('threats')} />
               <ViewTab label="Matrix"     active={viewMode === 'matrix'}   onClick={() => setViewMode('matrix')} />
+              <ViewTab label="Trends"     active={viewMode === 'trends'}   onClick={() => setViewMode('trends')} />
               <div className="ml-auto flex items-center gap-2">
                 <PanelToggle
                   label={filtersOpen ? 'Hide filters' : 'Show filters'}
@@ -198,6 +219,18 @@ export default function App() {
                 />
               </div>
             </div>
+
+            {/* Active-query chip bar */}
+            <QueryChipBar
+              info={info}
+              activeFilters={activeFilters}
+              yearRange={yearRange}
+              totalVisible={totalVisible}
+              onSetGroup={setGroupFilters}
+              onYearRange={handleYearRange}
+              onClear={clearFilters}
+            />
+
             <div className="flex-1 overflow-hidden relative">
               {viewMode === 'scatter' ? (
                 <Scatterplot
@@ -232,6 +265,13 @@ export default function App() {
                   activeFilters={activeFilters}
                   onSetGroup={setGroupFilters}
                 />
+              ) : viewMode === 'trends' ? (
+                <TrendsView
+                  info={info}
+                  arrowData={arrowData}
+                  bitmasks={bitmasks}
+                  filteredMask={filteredMask}
+                />
               ) : (
                 <TableView
                   arrowData={arrowData}
@@ -254,7 +294,7 @@ export default function App() {
               />
 
               <aside
-                style={{ width: resultsWidth, minWidth: MIN_PANEL, maxWidth: MAX_PANEL }}
+                style={{ width: resultsWidth, minWidth: MIN_PANEL, maxWidth: MAX_PANEL, backgroundColor: '#f7f6f0' }}
                 className="flex-shrink-0 overflow-y-auto border-l border-gray-200"
               >
                 <ResultsList
@@ -277,9 +317,10 @@ function ViewTab({ label, active, onClick }) {
   return (
     <button
       onClick={onClick}
+      style={active ? { backgroundColor: '#2d5238' } : {}}
       className={`px-3 py-1 text-xs rounded font-medium transition-colors
         ${active
-          ? 'bg-amber-700 text-white'
+          ? 'text-white'
           : 'text-gray-500 hover:text-gray-800 hover:bg-gray-100'
         }`}
     >
@@ -379,7 +420,7 @@ function ResizeHandle({ onDelta }) {
   return (
     <div
       onMouseDown={onMouseDown}
-      className="w-1.5 flex-shrink-0 bg-gray-200 hover:bg-amber-400 active:bg-amber-500 cursor-col-resize transition-colors"
+      className="w-1.5 flex-shrink-0 bg-gray-200 hover:bg-[#4a7c5d] active:bg-[#2d5238] cursor-col-resize transition-colors"
     />
   )
 }

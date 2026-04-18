@@ -2,15 +2,9 @@ import { useMemo, useState, useEffect } from 'react'
 import { countIntersection } from '../utils/bitmask'
 
 function levelLabelsForGroup(groupKey, level) {
-  if (groupKey === 'realm') {
-    return { 0: 'Realm', 1: 'Biome', 2: 'EFG' }[level] || `Level ${level}`
-  }
-  if (groupKey === 'region') {
-    return { 0: 'Region', 1: 'Subregion', 2: 'Country / sub-national' }[level] || `Level ${level}`
-  }
-  if (groupKey === 'threats') {
-    return { 0: 'Threat category', 1: 'Sub-category' }[level] || `Level ${level}`
-  }
+  if (groupKey === 'realm')   return { 0: 'Realm', 1: 'Biome', 2: 'EFG' }[level] || `Level ${level}`
+  if (groupKey === 'region')  return { 0: 'Region', 1: 'Subregion', 2: 'Country / sub-national' }[level] || `Level ${level}`
+  if (groupKey === 'threats') return { 0: 'Threat category', 1: 'Sub-category' }[level] || `Level ${level}`
   return `Level ${level}`
 }
 
@@ -22,26 +16,11 @@ function buildAxisOptions(info) {
       let levels = Array.from(new Set(labels.map(l => l.level ?? 0))).sort((a, b) => a - b)
       if (groupKey === 'threats') levels = levels.filter(l => l <= 1)
       for (const level of levels) {
-        out.push({
-          id: `${groupKey}|${level}`,
-          groupKey,
-          level,
-          label: `${group.name} · ${levelLabelsForGroup(groupKey, level)}`,
-        })
+        out.push({ id: `${groupKey}|${level}`, groupKey, level, label: `${group.name} · ${levelLabelsForGroup(groupKey, level)}` })
       }
-      out.push({
-        id: `${groupKey}|all`,
-        groupKey,
-        level: null,
-        label: `${group.name} · All levels`,
-      })
+      out.push({ id: `${groupKey}|all`, groupKey, level: null, label: `${group.name} · All levels` })
     } else {
-      out.push({
-        id: `${groupKey}|all`,
-        groupKey,
-        level: null,
-        label: group.name,
-      })
+      out.push({ id: `${groupKey}|all`, groupKey, level: null, label: group.name })
     }
   }
   return out
@@ -49,34 +28,31 @@ function buildAxisOptions(info) {
 
 export default function MatrixView({ info, bitmasks, filteredMask, activeFilters, onSetGroup }) {
   const axisOptions = useMemo(() => buildAxisOptions(info), [info])
-  const defaultV = axisOptions.find(o => o.id === 'region|1')?.id ?? axisOptions[0]?.id ?? ''
-  const defaultH = axisOptions.find(o => o.id === 'threats|0')?.id ?? axisOptions[1]?.id ?? defaultV
-  const [verticalAxisId, setVerticalAxisId] = useState(defaultV)
-  const [horizontalAxisId, setHorizontalAxisId] = useState(defaultH)
-  const [useLog, setUseLog] = useState(true)
+  const defaultRows = axisOptions.find(o => o.groupKey === 'drivers' && o.level == null)?.id ?? axisOptions[0]?.id ?? ''
+  const defaultCols = axisOptions.find(o => o.groupKey === 'realm'   && o.level == null)?.id ?? axisOptions[1]?.id ?? defaultRows
+
+  const [rowAxisId,  setRowAxisId]  = useState(defaultRows)
+  const [colAxisId,  setColAxisId]  = useState(defaultCols)
+  const [mode,       setMode]       = useState('hotspot') // 'hotspot' | 'gap'
+  const [useLog,     setUseLog]     = useState(true)
 
   useEffect(() => {
     if (!info || axisOptions.length === 0) return
     const validIds = new Set(axisOptions.map(o => o.id))
-    if (!validIds.has(verticalAxisId)) setVerticalAxisId(defaultV)
-    if (!validIds.has(horizontalAxisId)) setHorizontalAxisId(defaultH)
-  }, [info, axisOptions, defaultV, defaultH, verticalAxisId, horizontalAxisId])
+    if (!validIds.has(rowAxisId)) setRowAxisId(defaultRows)
+    if (!validIds.has(colAxisId)) setColAxisId(defaultCols)
+  }, [info, axisOptions, defaultRows, defaultCols, rowAxisId, colAxisId])
 
-  const verticalAxis = axisOptions.find(o => o.id === verticalAxisId)
-  const horizontalAxis = axisOptions.find(o => o.id === horizontalAxisId)
-
-  const verticalGroup = info?.groups?.[verticalAxis?.groupKey]
-  const horizontalGroup = info?.groups?.[horizontalAxis?.groupKey]
+  const rowAxis = axisOptions.find(o => o.id === rowAxisId)
+  const colAxis = axisOptions.find(o => o.id === colAxisId)
+  const rowGroup = info?.groups?.[rowAxis?.groupKey]
+  const colGroup = info?.groups?.[colAxis?.groupKey]
 
   function isAncestor(ancestorId, nodeId, labels) {
     let cur = labels?.[nodeId]
-    while (cur?.parent) {
-      if (cur.parent === ancestorId) return true
-      cur = labels[cur.parent]
-    }
+    while (cur?.parent) { if (cur.parent === ancestorId) return true; cur = labels[cur.parent] }
     return false
   }
-
   function withinSelectedTree(label, groupKey, labels) {
     const selected = activeFilters?.[groupKey]
     if (!selected || selected.size === 0) return true
@@ -88,156 +64,197 @@ export default function MatrixView({ info, bitmasks, filteredMask, activeFilters
     return false
   }
 
-  const vLabels = useMemo(() => {
-    if (!verticalGroup) return []
-    const labels = Object.values(verticalGroup.labels || {})
-    const filtered = verticalAxis?.level == null ? labels : labels.filter(l => (l.level ?? 0) === verticalAxis.level)
-    return filtered
-      .filter(l => withinSelectedTree(l, verticalAxis.groupKey, verticalGroup.labels))
-      .sort((a, b) => a.name.localeCompare(b.name))
-  }, [verticalGroup, verticalAxis, activeFilters])
+  const rowLabels = useMemo(() => {
+    if (!rowGroup) return []
+    const labels = Object.values(rowGroup.labels || {})
+    const filtered = rowAxis?.level == null ? labels : labels.filter(l => (l.level ?? 0) === rowAxis.level)
+    return filtered.filter(l => withinSelectedTree(l, rowAxis.groupKey, rowGroup.labels)).sort((a, b) => a.name.localeCompare(b.name))
+  }, [rowGroup, rowAxis, activeFilters])
 
-  const hLabels = useMemo(() => {
-    if (!horizontalGroup) return []
-    const labels = Object.values(horizontalGroup.labels || {})
-    const filtered = horizontalAxis?.level == null ? labels : labels.filter(l => (l.level ?? 0) === horizontalAxis.level)
-    return filtered
-      .filter(l => withinSelectedTree(l, horizontalAxis.groupKey, horizontalGroup.labels))
-      .sort((a, b) => a.name.localeCompare(b.name))
-  }, [horizontalGroup, horizontalAxis, activeFilters])
+  const colLabels = useMemo(() => {
+    if (!colGroup) return []
+    const labels = Object.values(colGroup.labels || {})
+    const filtered = colAxis?.level == null ? labels : labels.filter(l => (l.level ?? 0) === colAxis.level)
+    return filtered.filter(l => withinSelectedTree(l, colAxis.groupKey, colGroup.labels)).sort((a, b) => a.name.localeCompare(b.name))
+  }, [colGroup, colAxis, activeFilters])
 
   const byteLength = useMemo(() => {
-    const masksForGroup = bitmasks?.[verticalAxis?.groupKey] || bitmasks?.[horizontalAxis?.groupKey]
+    const masksForGroup = bitmasks?.[rowAxis?.groupKey] || bitmasks?.[colAxis?.groupKey]
     const first = masksForGroup && Object.values(masksForGroup)[0]
     return first?.length ?? 0
-  }, [bitmasks, verticalAxis, horizontalAxis])
+  }, [bitmasks, rowAxis, colAxis])
 
   const { matrix, maxValue, rows, cols } = useMemo(() => {
-    if (!bitmasks || !verticalGroup || !horizontalGroup) return { matrix: [], maxValue: 0 }
-    const vMasks = bitmasks[verticalAxis.groupKey] || {}
-    const hMasks = bitmasks[horizontalAxis.groupKey] || {}
-    const filt = filteredMask || null
+    if (!bitmasks || !rowGroup || !colGroup) return { matrix: [], maxValue: 0, rows: [], cols: [] }
+    const vMasks = bitmasks[rowAxis.groupKey] || {}
+    const hMasks = bitmasks[colAxis.groupKey] || {}
     let max = 0
-    const rawRows = vLabels.map(v => {
-      const row = hLabels.map(h => {
-        const count = countIntersection(vMasks[v.id], hMasks[h.id], filt, byteLength)
-        if (count > max) max = count
-        return count
-      })
-      return row
-    })
+    const rawRows = rowLabels.map(v => rowLabels && colLabels.map(h => {
+      const count = countIntersection(vMasks[v.id], hMasks[h.id], filteredMask || null, byteLength)
+      if (count > max) max = count
+      return count
+    }))
     const rowHasValue = rawRows.map(r => r.some(v => v > 0))
-    const colHasValue = hLabels.map((_, c) => rawRows.some(r => r[c] > 0))
-    const rows = vLabels.filter((_, i) => rowHasValue[i])
-    const cols = hLabels.filter((_, i) => colHasValue[i])
-    const matrix = rawRows
-      .filter((_, i) => rowHasValue[i])
-      .map(r => r.filter((_, i) => colHasValue[i]))
+    const colHasValue = colLabels.map((_, c) => rawRows.some(r => r[c] > 0))
+    const rows = rowLabels.filter((_, i) => rowHasValue[i])
+    const cols = colLabels.filter((_, i) => colHasValue[i])
+    const matrix = rawRows.filter((_, i) => rowHasValue[i]).map(r => r.filter((_, i) => colHasValue[i]))
     return { matrix, maxValue: max, rows, cols }
-  }, [bitmasks, verticalGroup, horizontalGroup, vLabels, hLabels, filteredMask, byteLength, verticalAxis, horizontalAxis])
+  }, [bitmasks, rowGroup, colGroup, rowLabels, colLabels, filteredMask, byteLength, rowAxis, colAxis])
 
-  const maxScaleValue = useLog ? Math.log10(maxValue + 1) : maxValue
+  // Expected counts for evidence gap mode
+  const { rowTotals, colTotals, grandTotal } = useMemo(() => {
+    if (!matrix.length) return { rowTotals: [], colTotals: [], grandTotal: 0 }
+    const rowTotals = matrix.map(row => row.reduce((s, v) => s + v, 0))
+    const colTotals = cols.map((_, c) => matrix.reduce((s, row) => s + (row[c] ?? 0), 0))
+    const grandTotal = rowTotals.reduce((s, v) => s + v, 0)
+    return { rowTotals, colTotals, grandTotal }
+  }, [matrix, cols])
 
-  function valueToColor(value) {
-    if (maxScaleValue <= 0) return '#f3f4f6'
-    const v = useLog ? Math.log10(value + 1) : value
-    const t = Math.min(1, Math.max(0, v / maxScaleValue))
-    if (t < 0.2) return '#ffffff'
-    if (t < 0.4) return 'hsl(210,30%,90%)'
-    if (t < 0.6) return 'hsl(210,40%,78%)'
-    if (t < 0.8) return 'hsl(210,55%,62%)'
-    return 'hsl(216,65%,40%)'
+  const maxScaled = useLog ? Math.log10(maxValue + 1) : maxValue
+
+  // Hotspot: moss green scale
+  function hotspotColor(value) {
+    if (maxScaled <= 0) return '#f9fafb'
+    const raw = useLog ? Math.log10(value + 1) : value
+    const t = Math.min(1, Math.max(0, raw / maxScaled))
+    if (t < 0.15) return '#f9fafb'
+    if (t < 0.35) return 'hsl(140,22%,91%)'
+    if (t < 0.55) return 'hsl(140,32%,77%)'
+    if (t < 0.75) return 'hsl(140,42%,58%)'
+    return '#2d5238'
   }
 
-  function textColor(value) {
-    const v = useLog ? Math.log10(value + 1) : value
-    const t = maxScaleValue > 0 ? v / maxScaleValue : 0
-    if (t >= 0.8) return '#ffffff'
-    return '#111827'
+  // Evidence gap: clay color for under-represented cells
+  function gapColor(observed, rowIdx, colIdx) {
+    if (grandTotal === 0) return '#f9fafb'
+    const expected = (rowTotals[rowIdx] * colTotals[colIdx]) / grandTotal
+    if (expected < 1) return '#f9fafb'
+    const ratio = observed / expected
+    if (ratio >= 1.0) return '#f9fafb'
+    if (ratio >= 0.7) return 'hsl(20,30%,94%)'
+    if (ratio >= 0.4) return 'hsl(20,45%,82%)'
+    if (ratio >= 0.2) return 'hsl(20,55%,68%)'
+    return '#b45a3d'
   }
 
-  function swapAxes() {
-    setVerticalAxisId(horizontalAxisId)
-    setHorizontalAxisId(verticalAxisId)
+  function cellColor(value, rowIdx, colIdx) {
+    return mode === 'hotspot' ? hotspotColor(value) : gapColor(value, rowIdx, colIdx)
   }
+
+  function textColor(value, rowIdx, colIdx) {
+    const bg = cellColor(value, rowIdx, colIdx)
+    return (bg === '#2d5238' || bg === '#b45a3d') ? '#ffffff' : '#111827'
+  }
+
+  function swapAxes() { setRowAxisId(colAxisId); setColAxisId(rowAxisId) }
 
   function applyCellFilters(vId, hId) {
-    if (!onSetGroup || !verticalAxis?.groupKey || !horizontalAxis?.groupKey) return
-    onSetGroup(verticalAxis.groupKey, () => new Set([vId]))
-    if (horizontalAxis.groupKey !== verticalAxis.groupKey) {
-      onSetGroup(horizontalAxis.groupKey, () => new Set([hId]))
-    }
+    if (!onSetGroup || !rowAxis?.groupKey || !colAxis?.groupKey) return
+    onSetGroup(rowAxis.groupKey, () => new Set([vId]))
+    if (colAxis.groupKey !== rowAxis.groupKey) onSetGroup(colAxis.groupKey, () => new Set([hId]))
   }
+
+  const hint = mode === 'hotspot'
+    ? <>Cells shaded <strong>moss</strong> have the most studies. Click a cell to filter.</>
+    : <>Cells shaded <strong style={{ color: '#b45a3d' }}>clay</strong> are under-represented given the marginals. Click to isolate.</>
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="px-4 py-3 border-b border-gray-100">
-        <div className="flex flex-wrap items-center gap-4">
-          <label className="flex items-center gap-2 text-xs text-gray-700">
-            <input type="checkbox" checked={useLog} onChange={e => setUseLog(e.target.checked)} />
-            Use log-scale
-          </label>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-500">Vertical axis</span>
-            <select
-              className="text-xs border border-gray-200 rounded px-2 py-1"
-              value={verticalAxisId}
-              onChange={e => setVerticalAxisId(e.target.value)}
+      {/* Controls */}
+      <div className="px-4 py-3 border-b border-gray-100 flex flex-wrap items-center gap-6">
+        {/* Mode toggle */}
+        <div>
+          <div className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Mode</div>
+          <div className="flex rounded border border-gray-200 overflow-hidden">
+            <button
+              onClick={() => setMode('hotspot')}
+              className={`px-3 py-1 text-xs font-medium transition-colors ${mode === 'hotspot' ? 'bg-[#2d5238] text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
             >
-              {axisOptions.map(opt => (
-                <option key={opt.id} value={opt.id}>{opt.label}</option>
-              ))}
-            </select>
-          </div>
-          <button
-            className="text-xs border border-gray-200 rounded px-2 py-1 text-gray-600 hover:bg-gray-50"
-            onClick={swapAxes}
-            title="Swap axes"
-          >
-            ↔
-          </button>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-500">Horizontal axis</span>
-            <select
-              className="text-xs border border-gray-200 rounded px-2 py-1"
-              value={horizontalAxisId}
-              onChange={e => setHorizontalAxisId(e.target.value)}
+              Hotspots
+            </button>
+            <button
+              onClick={() => setMode('gap')}
+              className={`px-3 py-1 text-xs font-medium transition-colors ${mode === 'gap' ? 'bg-[#b45a3d] text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
             >
-              {axisOptions.map(opt => (
-                <option key={opt.id} value={opt.id}>{opt.label}</option>
-              ))}
-            </select>
+              Evidence gaps
+            </button>
           </div>
         </div>
+
+        {/* Row axis */}
+        <div>
+          <div className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Rows</div>
+          <select
+            className="text-xs border border-gray-200 rounded px-2 py-1"
+            value={rowAxisId}
+            onChange={e => setRowAxisId(e.target.value)}
+          >
+            {axisOptions.map(opt => <option key={opt.id} value={opt.id}>{opt.label}</option>)}
+          </select>
+        </div>
+
+        <button className="text-xs border border-gray-200 rounded px-2 py-1 text-gray-600 hover:bg-gray-50 mt-4" onClick={swapAxes} title="Swap axes">↔</button>
+
+        {/* Column axis */}
+        <div>
+          <div className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Columns</div>
+          <select
+            className="text-xs border border-gray-200 rounded px-2 py-1"
+            value={colAxisId}
+            onChange={e => setColAxisId(e.target.value)}
+          >
+            {axisOptions.map(opt => <option key={opt.id} value={opt.id}>{opt.label}</option>)}
+          </select>
+        </div>
+
+        {/* Log scale */}
+        <div className="ml-auto flex items-center gap-2">
+          <label className="flex items-center gap-1.5 text-xs text-gray-600 cursor-pointer">
+            <input type="checkbox" checked={useLog} onChange={e => setUseLog(e.target.checked)} className="rounded" />
+            Log scale
+          </label>
+        </div>
+        <div className="text-xs text-gray-500 text-right mt-4 ml-2">{hint}</div>
       </div>
 
-      <div className="flex-1 overflow-auto p-4 relative">
-        <div className="min-w-max">
-          <div
-            className="grid gap-px bg-gray-200 sticky top-0 z-30"
-            style={{ gridTemplateColumns: `minmax(140px, 200px) repeat(${cols.length}, 84px)` }}
-          >
-          <div className="bg-white" />
-          {cols.map(h => (
-            <div
-              key={h.id}
-              className="bg-white text-[11px] font-medium text-gray-700 p-1.5 break-words"
-            >
-                {h.name}
+      {/* Matrix table */}
+      <div className="flex-1 overflow-auto p-4">
+        {/*
+          paddingRight gives the last column's angled header text room beyond
+          the grid edge, preventing the overflow: auto container from clipping it.
+        */}
+        <div className="min-w-max" style={{ paddingRight: 80 }}>
+          {/* Column headers — vertical writing-mode: zero overflow risk */}
+          <div className="flex" style={{ paddingLeft: 160 }}>
+            {cols.map(h => (
+              <div
+                key={h.id}
+                className="flex-shrink-0 flex items-end justify-center pb-2"
+                style={{ width: 80, height: 120 }}
+                title={h.name}
+              >
+                <span
+                  className="text-[11px] font-medium text-gray-600 select-none"
+                  style={{
+                    writingMode: 'vertical-rl',
+                    transform: 'rotate(180deg)',
+                    maxHeight: 108,
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {h.name.length > 20 ? h.name.slice(0, 19) + '…' : h.name}
+                </span>
               </div>
             ))}
           </div>
 
-          <div
-            className="grid gap-px bg-gray-200"
-            style={{ gridTemplateColumns: `minmax(140px, 200px) repeat(${cols.length}, 84px)` }}
-          >
+          {/* Data rows */}
+          <div>
             {rows.map((v, rowIdx) => (
-              <div key={v.id} className="contents">
-                <div
-                  key={`${v.id}-label`}
-                  className="bg-white text-[11px] font-medium text-gray-700 p-1.5 break-words sticky left-0 z-20"
-                >
+              <div key={v.id} className="flex gap-px mb-px">
+                <div className="flex-shrink-0 flex items-center text-[11px] font-medium text-gray-700 pr-2 text-right" style={{ width: 158 }}>
                   {v.name}
                 </div>
                 {cols.map((h, colIdx) => {
@@ -245,12 +262,16 @@ export default function MatrixView({ info, bitmasks, filteredMask, activeFilters
                   return (
                     <div
                       key={`${v.id}-${h.id}`}
-                      className="bg-white text-center text-[11px] font-semibold flex items-center justify-center h-9 cursor-pointer hover:brightness-95"
-                      style={{ backgroundColor: valueToColor(count), color: textColor(count) }}
+                      className="flex-shrink-0 flex items-center justify-center text-[11px] font-semibold cursor-pointer hover:brightness-95 transition-all rounded-sm"
+                      style={{
+                        width: 80, height: 36,
+                        backgroundColor: cellColor(count, rowIdx, colIdx),
+                        color: textColor(count, rowIdx, colIdx),
+                      }}
                       title={`${v.name} × ${h.name}: ${count.toLocaleString()}`}
                       onClick={() => applyCellFilters(v.id, h.id)}
                     >
-                      {count.toLocaleString()}
+                      {count > 0 ? count.toLocaleString() : ''}
                     </div>
                   )
                 })}
@@ -259,22 +280,22 @@ export default function MatrixView({ info, bitmasks, filteredMask, activeFilters
           </div>
         </div>
 
-        <div className="mt-4 flex items-center gap-3 text-[11px] text-gray-500">
-          <span>Low</span>
-          <div
-            className="h-2 w-40 rounded"
-            style={{ background: 'linear-gradient(90deg, #ffffff 0%, #ffffff 20%, hsl(210,30%,90%) 20%, hsl(210,30%,90%) 40%, hsl(210,40%,78%) 40%, hsl(210,40%,78%) 60%, hsl(210,55%,62%) 60%, hsl(210,55%,62%) 80%, hsl(216,65%,40%) 80%, hsl(216,65%,40%) 100%)' }}
-          />
-          <span>High</span>
-          <span className="relative group ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full border border-gray-300 text-[10px] text-gray-500">
-            i
-            <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-1 w-64 -translate-x-1/2 rounded bg-gray-900 px-2 py-1 text-[10px] text-white opacity-0 shadow transition-opacity group-hover:opacity-100">
-              Each matrix entry represents the count records in the dataset; Color scale is split in increments of 20 percentiles.
-            </span>
-          </span>
-          <span className="ml-2 text-gray-400">
-            {useLog ? 'log scale' : 'linear'} · max {maxValue.toLocaleString()}
-          </span>
+        {/* Legend */}
+        <div className="mt-6 flex items-center gap-3 text-[11px] text-gray-500">
+          {mode === 'hotspot' ? (
+            <>
+              <span>Fewer</span>
+              <div className="h-2 w-40 rounded" style={{ background: 'linear-gradient(90deg, #f9fafb, hsl(140,22%,91%), hsl(140,32%,77%), hsl(140,42%,58%), #2d5238)' }} />
+              <span>More</span>
+            </>
+          ) : (
+            <>
+              <span>Well-represented</span>
+              <div className="h-2 w-40 rounded" style={{ background: 'linear-gradient(90deg, #f9fafb, hsl(20,30%,94%), hsl(20,45%,82%), hsl(20,55%,68%), #b45a3d)' }} />
+              <span>Under-represented</span>
+            </>
+          )}
+          <span className="ml-2 text-gray-400">{useLog ? 'log scale · ' : ''}max {maxValue.toLocaleString()}</span>
         </div>
       </div>
     </div>
